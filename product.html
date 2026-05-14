@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapsible Dog Crate – Pote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #E6DDD8;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── Page ──────────────────────────────────────────── */
+    .page {
+      width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      padding: 136px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* ─── Navbar ─────────────────────────────────────────── */
+    .navbar {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 80px 0;
+      background: #E6DDD8;
+    }
+
+    .logo-wrap {
+      width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .logo-wrap img { width: 100%; height: auto; }
+
+    .nav-menu { display: flex; align-items: center; gap: 48px; }
+
+    .nav-link {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+      text-decoration: none;
+    }
+    .nav-link.active {
+      padding-bottom: 2px;
+      border-bottom: 2px solid #0B3A43;
+    }
+
+    /* Layered CTA button */
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      padding: 4px 8px 8px;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .cta-btn .btn-shadow {
+      position: absolute;
+      background: #0B3A43;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      bottom: 0; left: 4px; right: 0; top: 8px;
+    }
+    .cta-btn .btn-face {
+      position: relative;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cta-btn .btn-face span {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+      white-space: nowrap;
+    }
+    .cta-btn.bg-beige .btn-face { background: #E6DDD8; }
+    .cta-btn.bg-green  .btn-face { background: #A0CE7A; }
+
+    /* ─── Content section ────────────────────────────────── */
+    .content-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-self: stretch;
+      gap: 240px;
+    }
+
+    /* ─── Frame 12 (product + details) ───────────────────── */
+    .frame-12 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-self: stretch;
+      gap: 80px;
+    }
+
+    /* ─── Product detail row ─────────────────────────────── */
+    .detail-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 160px;
+      padding: 40px 0 0;
+      width: 1280px;
+    }
+
+    /* ─── Left: images ───────────────────────────────────── */
+    .images-col {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 32px;
+      flex: 1;
+      min-width: 0;
+      position: relative;
+    }
+
+    .main-image {
+      width: 100%;
+      height: 680px;
+      border-radius: 48px;
+      object-fit: cover;
+      border: 1px solid transparent;
+      display: block;
+    }
+
+    .carousel-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      align-self: stretch;
+      position: relative;
+    }
+
+    .carousel-images {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .thumb {
+      flex: 1;
+      height: 128px;
+      border-radius: 24px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .thumb.active {
+      position: relative;
+    }
+
+    .thumb-wrap {
+      flex: 1;
+      height: 128px;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-wrap.selected::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 58, 67, 0.5);
+      border-radius: 24px;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(230, 221, 216, 0.08);
+      border: 1px solid rgba(230, 221, 216, 0.48);
+      border-radius: 100px;
+      cursor: pointer;
+      backdrop-filter: blur(32px);
+      flex-shrink: 0;
+    }
+
+    /* ─── Right: product info ────────────────────────────── */
+    .info-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-self: stretch;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .info-top {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-self: stretch;
+    }
+
+    /* Title row */
+    .title-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-self: stretch;
+      align-items: flex-start;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .product-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #0B3A43;
+    }
+
+    .product-price {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #0B3A43;
+    }
+
+    .share-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Rating badges */
+    .rating-row {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .badge {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px 0 12px;
+      height: 32px;
+      background: #FFFFFF;
+      border-radius: 27px;
+    }
+
+    .badge-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .badge-text {
+      font-weight: 600;
+      font-size: 14px;
+      color: #0B3A43;
+    }
+
+    /* Color + Size selectors */
+    .selectors {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-self: stretch;
+    }
+
+    .selector-group {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .selector-label-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .selector-label {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    .selector-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(11, 58, 67, 0.5);
+    }
+
+    .selector-value {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 140%;
+      color: rgba(11, 58, 67, 0.5);
+    }
+
+    .color-circles {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .color-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .color-circle.selected {
+      outline: 2px solid #0B3A43;
+      outline-offset: 2px;
+    }
+
+    /* Size dropdown */
+    .size-dropdown-wrap {
+      position: relative;
+      align-self: stretch;
+    }
+
+    .dropdown {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 12px 12px 16px;
+      align-self: stretch;
+      border: 1px solid #0B3A43;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      background: #E6DDD8;
+      transition: border-radius 0.15s;
+    }
+
+    .dropdown.open {
+      border-radius: 8px 8px 0 0;
+      border-bottom-color: transparent;
+    }
+
+    .dropdown-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dropdown-main {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    .dropdown-sub {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 140%;
+      color: rgba(11, 58, 67, 0.5);
+    }
+
+    .dropdown-arrow {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .dropdown-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown options panel */
+    .dropdown-options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #E6DDD8;
+      border: 1px solid #0B3A43;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    .dropdown-options.open {
+      display: block;
+    }
+
+    .dropdown-option {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-top: 1px solid rgba(11, 58, 67, 0.12);
+      transition: background 0.15s;
+    }
+
+    .dropdown-option:first-child {
+      border-top: none;
+    }
+
+    .dropdown-option:hover {
+      background: rgba(11, 58, 67, 0.06);
+    }
+
+    .dropdown-option.selected {
+      background: rgba(11, 58, 67, 0.08);
+    }
+
+    .dropdown-option-main {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    .dropdown-option-sub {
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 140%;
+      color: rgba(11, 58, 67, 0.55);
+    }
+
+    .dropdown-arrow-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      flex-shrink: 0;
+    }
+
+    /* Inquiry button */
+    .inquiry-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 16px;
+      width: 100%;
+      height: 64px;
+      background: #0B3A43;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .inquiry-btn span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 100%;
+      color: #FFFFFF;
+    }
+
+    /* Delivery info */
+    .delivery-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: stretch;
+      gap: 32px;
+      height: 128px;
+      border-radius: 48px;
+    }
+
+    .delivery-item {
+      display: flex;
+      flex-direction: row;
+      align-self: stretch;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .delivery-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .delivery-text {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 7px;
+      flex: 1;
+    }
+
+    .delivery-title {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 135%;
+      color: #0B3A43;
+    }
+
+    .delivery-desc {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 115%;
+      color: #0B3A43;
+    }
+
+    /* ─── Lower sections ──────────────────────────────────── */
+    .lower-sections {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      gap: 32px;
+    }
+
+    .section-padded {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      padding: 0 80px;
+      gap: 32px;
+    }
+
+    /* White card */
+    .white-card {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      padding: 80px;
+      background: #FFFFFF;
+      border-radius: 48px;
+      gap: 32px;
+    }
+
+    /* ─── Accordion ───────────────────────────────────────── */
+    .accordion-item {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      padding: 16px 0 24px;
+      border-top: 1px solid rgba(11, 58, 67, 0.32);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-title {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 140%;
+      color: #0B3A43;
+      flex: 1;
+    }
+
+    .accordion-arrow {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 60px;
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-item.open .accordion-arrow {
+      transform: rotate(45deg);
+    }
+
+    .accordion-body {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 115%;
+      color: #0B3A43;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      margin-top: 0;
+      transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.25s ease;
+    }
+
+    .accordion-item.open .accordion-body {
+      max-height: 300px;
+      opacity: 1;
+      margin-top: 16px;
+    }
+
+    /* ─── Reviews ─────────────────────────────────────────── */
+    .reviews-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 640px;
+    }
+
+    .reviews-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #0B3A43;
+    }
+
+    .rating-breakdown {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .rating-bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px 0 12px;
+      width: 64px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid #0B3A43;
+      border-radius: 27px;
+    }
+
+    .rating-bar-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .rating-bar-num {
+      font-weight: 600;
+      font-size: 14px;
+      color: #0B3A43;
+    }
+
+    .sort-dropdown {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px 0 16px;
+      width: 160px;
+      height: 48px;
+      border: 1px solid #0B3A43;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .sort-dropdown span {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    /* Review row */
+    .review-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 32px;
+      padding: 24px 0;
+      width: 1120px;
+      border-top: 1px solid rgba(11, 58, 67, 0.32);
+    }
+
+    .review-inner {
+      display: flex;
+      flex-direction: row;
+      align-self: stretch;
+      gap: 80px;
+    }
+
+    .reviewer-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .reviewer-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #E6DDD8;
+      flex-shrink: 0;
+    }
+
+    .reviewer-star {
+      width: 32px;
+      height: 32px;
+    }
+
+    .reviewer-name {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 135%;
+      color: #0B3A43;
+    }
+
+    .review-content {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+      width: 640px;
+      flex-shrink: 0;
+    }
+
+    .review-meta {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+    }
+
+    .review-title {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 135%;
+      color: #0B3A43;
+    }
+
+    .review-date {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 115%;
+      color: rgba(11, 58, 67, 0.32);
+    }
+
+    .review-text {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 115%;
+      color: #0B3A43;
+    }
+
+    .helpful-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      width: 640px;
+    }
+
+    .helpful-label {
+      font-weight: 400;
+      font-size: 13px;
+      color: #0B3A43;
+    }
+
+    .helpful-btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .helpful-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.32;
+    }
+
+    .helpful-count {
+      font-weight: 400;
+      font-size: 13px;
+      color: #0B3A43;
+    }
+
+    /* Reviews footer */
+    .reviews-footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+    }
+
+    .write-review-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      height: 48px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: none;
+    }
+
+    .write-review-btn span {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+    }
+
+    /* ─── Write a Review modal ───────────────────────────── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 58, 67, 0.4);
+      backdrop-filter: blur(6px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #FFFFFF;
+      border-radius: 48px;
+      padding: 64px;
+      width: 640px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: #0B3A43;
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 100px;
+      border: 1px solid rgba(11, 58, 67, 0.32);
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+
+    .modal-close:hover { background: rgba(11, 58, 67, 0.06); }
+
+    .modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal-label {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    .modal-input,
+    .modal-textarea {
+      width: 100%;
+      background: #E6DDD8;
+      border: 1px solid rgba(11, 58, 67, 0.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 140%;
+      color: #0B3A43;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-input:focus,
+    .modal-textarea:focus {
+      border-color: #0B3A43;
+    }
+
+    .modal-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .star-picker {
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+    }
+
+    .star-picker .star {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      color: rgba(11, 58, 67, 0.2);
+      transition: color 0.15s, transform 0.1s;
+    }
+
+    .star-picker .star:hover,
+    .star-picker .star.active {
+      color: #FAC832;
+    }
+
+    .star-picker .star:hover { transform: scale(1.15); }
+
+    .modal-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 32px;
+      background: #0B3A43;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #FFFFFF;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+
+    .modal-submit:hover { opacity: 0.85; }
+
+    /* ─── Footer ──────────────────────────────────────────── */
+    .footer {
+      width: 1280px;
+      background: #0B3A43;
+      border-radius: 48px;
+      padding: 80px;
+      align-self: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .footer-main {
+      display: flex;
+      flex-direction: row;
+      align-self: stretch;
+      gap: 80px;
+    }
+
+    .footer-nav-group {
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
+      flex: 1;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 140%;
+      color: #E6DDD8;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .footer-link,
+    .footer-address-item {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      color: #E6DDD8;
+      text-decoration: none;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-address-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-copyright {
+      position: absolute;
+      right: 80px;
+      bottom: 80px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      color: rgba(230, 221, 216, 0.48);
+    }
+
+    .footer-follow {
+      position: absolute;
+      right: 80px;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-social-icons {
+      display: flex;
+      gap: 16px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Navbar ──────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="logo-wrap">
+      <img src="images/logo.svg" alt="Pote" />
+    </div>
+    <div class="nav-menu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="product.html" class="nav-link active">Products</a>
+      <a href="catalogue.html" class="nav-link">Catalogue</a>
+      <a href="contact.html" class="cta-btn bg-beige">
+        <div class="btn-shadow"></div>
+        <div class="btn-face"><span>Contact Us</span></div>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Content ──────────────────────────────────────────── -->
+  <div class="content-section">
+    <div class="frame-12">
+
+      <!-- ── Product Detail Row ─────────────────────────── -->
+      <div class="detail-row">
+
+        <!-- Left: images -->
+        <div class="images-col">
+          <img class="main-image" src="images/product-main.png" alt="Collapsible Dog Crate" />
+          <div class="carousel-container">
+            <div class="carousel-images">
+              <div class="thumb-wrap selected">
+                <img src="images/product-main.png" alt="Product view 1" />
+              </div>
+              <div class="thumb-wrap">
+                <img src="images/product-thumb-2.png" alt="Product view 2" />
+              </div>
+              <div class="thumb-wrap">
+                <img src="images/banner.png" alt="Product view 3" />
+              </div>
+              <div class="thumb-wrap">
+                <img src="images/travel-safe.png" alt="Product view 4" />
+              </div>
+            </div>
+            <div class="carousel-arrow">
+              <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 6L1 11" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: product info -->
+        <div class="info-col">
+          <!-- Top section: title + rating (height fills to 680px space-between) -->
+          <div class="info-top">
+            <!-- Title + share -->
+            <div class="title-row">
+              <div class="title-group">
+                <div class="product-title">Collapsible Dog Crate</div>
+                <div class="product-price">$750.00</div>
+              </div>
+              <div class="share-btn">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="20" cy="20" r="19" stroke="#0B3A43" stroke-width="1"/>
+                  <path d="M16 23l-4-4m0 0l4-4m-4 4h12" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="28" cy="16" r="2.5" stroke="#0B3A43" stroke-width="1.5"/>
+                  <circle cx="28" cy="24" r="2.5" stroke="#0B3A43" stroke-width="1.5"/>
+                  <path d="M12 20l13.5-6M12 20l13.5 6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Rating -->
+            <div class="rating-row">
+              <div class="badge">
+                <img src="images/icon-star.svg" alt="" class="badge-icon" />
+                <span class="badge-text">4.8</span>
+              </div>
+              <div class="badge">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="badge-icon">
+                  <path d="M14 7.5C14 10.5376 11.3137 13 8 13C7.24353 13 6.52021 12.866 5.85714 12.621L2 14L3.18182 11.0385C2.44068 10.1923 2 9.10769 2 7.92308C2 4.88462 4.68629 2.42308 8 2.42308C11.3137 2.42308 14 4.96154 14 8" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="badge-text">67 Reviews</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle: color + size -->
+          <div class="selectors">
+            <!-- Color -->
+            <div class="selector-group">
+              <div class="selector-label-row">
+                <span class="selector-label">Choose color</span>
+                <div class="selector-divider"></div>
+                <span class="selector-value">Gray</span>
+              </div>
+              <div class="color-circles">
+                <div class="color-circle selected" style="background:#808080;" title="Gray"></div>
+                <div class="color-circle" style="background:#22272A;" title="Dark"></div>
+                <div class="color-circle" style="background:#A0CE7A;" title="Green"></div>
+                <div class="color-circle" style="background:#E7AAC4;" title="Pink"></div>
+                <div class="color-circle" style="background:#5BD1D4;" title="Teal"></div>
+                <div class="color-circle" style="background:#498BFE;" title="Blue"></div>
+                <div class="color-circle" style="background:#FB555C;" title="Red"></div>
+                <div class="color-circle" style="background:#A383FA;" title="Purple"></div>
+                <div class="color-circle" style="background:#D8B386;" title="Tan"></div>
+                <div class="color-circle" style="background:#F4F4F4; border: 1px solid rgba(11,58,67,0.2);" title="White"></div>
+              </div>
+            </div>
+
+            <!-- Size -->
+            <div class="selector-group" style="flex:1;">
+              <div class="selector-label-row">
+                <span class="selector-label">Choose a Size</span>
+                <div class="selector-divider"></div>
+                <span class="selector-value" id="size-label-value">Medium – 30.5" × 20.5" × 26"</span>
+              </div>
+              <div class="size-dropdown-wrap">
+                <div class="dropdown" id="size-dropdown" onclick="toggleSizeDropdown()">
+                  <div class="dropdown-content">
+                    <span class="dropdown-main" id="dropdown-main-text">Medium – 30.5" × 20.5" × 26" (L × W × H)</span>
+                    <span class="dropdown-sub" id="dropdown-sub-text">Beagle, Mini-Doodles, German Pinscher</span>
+                  </div>
+                  <div class="dropdown-arrow" id="dropdown-arrow-icon">
+                    <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 0.5L4 3.5L7 0.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="dropdown-options" id="size-options">
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Small – 24.5" × 18.5" × 23" (L × W × H)' data-sub="French Bulldog, Dachsund, Boston Terrier" data-label='Small – 24.5" × 18.5" × 23"'>
+                    <span class="dropdown-option-main">Small – 24.5" × 18.5" × 23" (L × W × H)</span>
+                    <span class="dropdown-option-sub">French Bulldog, Dachsund, Boston Terrier</span>
+                  </div>
+                  <div class="dropdown-option selected" onclick="selectSize(this)" data-main='Medium – 30.5" × 20.5" × 26" (L × W × H)' data-sub="Beagle, Mini-Doodles, German Pinscher" data-label='Medium – 30.5" × 20.5" × 26"'>
+                    <span class="dropdown-option-main">Medium – 30.5" × 20.5" × 26" (L × W × H)</span>
+                    <span class="dropdown-option-sub">Beagle, Mini-Doodles, German Pinscher</span>
+                  </div>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Intermediate – 34.5" × 23" × 29" (L × W × H)' data-sub="Pit Bull, Belgian Malinois, Husky, Labrador, Golden Retriever" data-label='Intermediate – 34.5" × 23" × 29"'>
+                    <span class="dropdown-option-main">Intermediate – 34.5" × 23" × 29" (L × W × H)</span>
+                    <span class="dropdown-option-sub">Pit Bull, Belgian Malinois, Husky, Labrador, Golden Retriever</span>
+                  </div>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Large – 40.5" × 23" × 29" (L × W × H)' data-sub="Boxer, Dutch Shepherd, German Shorthaired Pointer, Weimaraner" data-label='Large – 40.5" × 23" × 29"'>
+                    <span class="dropdown-option-main">Large – 40.5" × 23" × 29" (L × W × H)</span>
+                    <span class="dropdown-option-sub">Boxer, Dutch Shepherd, German Shorthaired Pointer, Weimaraner</span>
+                  </div>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='XL – 40.5" × 27" × 33" (L × W × H)' data-sub="German Shepherd, Cane Corso, Bernedoodle, Doberman Pinscher" data-label='XL – 40.5" × 27" × 33"'>
+                    <span class="dropdown-option-main">XL – 40.5" × 27" × 33" (L × W × H)</span>
+                    <span class="dropdown-option-sub">German Shepherd, Cane Corso, Bernedoodle, Doberman Pinscher</span>
+                  </div>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='2XL – 48" × 27" × 33" (L × W × H)' data-sub="English Mastiff, Saint Berdoodle, Newfoundland" data-label='2XL – 48" × 27" × 33"'>
+                    <span class="dropdown-option-main">2XL – 48" × 27" × 33" (L × W × H)</span>
+                    <span class="dropdown-option-sub">English Mastiff, Saint Berdoodle, Newfoundland</span>
+                  </div>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main='3XL – 54.5" × 35.5" × 42" (L × W × H)' data-sub="Great Dane, Irish Wolfhound" data-label='3XL – 54.5" × 35.5" × 42"'>
+                    <span class="dropdown-option-main">3XL – 54.5" × 35.5" × 42" (L × W × H)</span>
+                    <span class="dropdown-option-sub">Great Dane, Irish Wolfhound</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA button -->
+          <a href="#" class="inquiry-btn">
+            <span>Send an inquiry</span>
+          </a>
+
+          <!-- Delivery info -->
+          <div class="delivery-info">
+            <div class="delivery-item">
+              <img src="images/icon-delivery.svg" alt="" class="delivery-icon" />
+              <div class="delivery-text">
+                <div class="delivery-title">Free Delivery</div>
+                <div class="delivery-desc">Available for all orders</div>
+              </div>
+            </div>
+            <div class="delivery-item">
+              <img src="images/icon-return.svg" alt="" class="delivery-icon" />
+              <div class="delivery-text">
+                <div class="delivery-title">Free returns &amp; exchanges</div>
+                <div class="delivery-desc">Free 30 days Delivery Return</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /detail-row -->
+
+      <!-- ── Lower sections ─────────────────────────────── -->
+      <div class="lower-sections">
+
+        <!-- Accordion card -->
+        <div class="section-padded">
+          <div class="white-card">
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="accordion-title">Product Description</span>
+                <div class="accordion-arrow">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.657 0.343L5.657 10.657M0.5 5.5L10.5 5.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <p class="accordion-body">Aluminum dog crates offer a strong yet lightweight solution for safely transporting and housing dogs. Their durable construction resists wear and corrosion while remaining easy to handle, making them ideal for travel and everyday use.</p>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="accordion-title">Shipping Info</span>
+                <div class="accordion-arrow">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.657 0.343L5.657 10.657M0.5 5.5L10.5 5.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <p class="accordion-body">Delivery is available directly to the customer's address for maximum convenience. Your order will be shipped safely and efficiently, ensuring it arrives in excellent condition.</p>
+            </div>
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleAccordion(this)">
+                <span class="accordion-title">Free Returns &amp; Exchanges</span>
+                <div class="accordion-arrow">
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.657 0.343L5.657 10.657M0.5 5.5L10.5 5.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <p class="accordion-body">Replacement is possible in case of a valid complaint. We ensure a quick and hassle-free exchange to guarantee your satisfaction.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews card -->
+        <div class="section-padded">
+          <div class="white-card">
+            <!-- Reviews header -->
+            <div style="display:flex; flex-direction:row; justify-content:space-between; align-items:center; width:640px;">
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <span class="reviews-title">Reviews</span>
+                <div class="rating-breakdown">
+                  <div class="rating-bar">
+                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
+                    <span class="rating-bar-num">5</span>
+                  </div>
+                  <div class="rating-bar">
+                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
+                    <span class="rating-bar-num">4</span>
+                  </div>
+                  <div class="rating-bar">
+                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
+                    <span class="rating-bar-num">3</span>
+                  </div>
+                  <div class="rating-bar">
+                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
+                    <span class="rating-bar-num">2</span>
+                  </div>
+                  <div class="rating-bar">
+                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
+                    <span class="rating-bar-num">1</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sort-dropdown">
+                <span>Newest</span>
+                <div class="dropdown-arrow">
+                  <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 0.5L4 3.5L7 0.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review rows -->
+            <div style="display:flex; flex-direction:column; align-self:stretch;">
+              <!-- Review 1 -->
+              <div class="review-row">
+                <div class="review-inner">
+                  <!-- Reviewer left column -->
+                  <div class="reviewer-info">
+                    <div style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:#E6DDD8; overflow:hidden;">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="8" cy="6" r="3" stroke="#0B3A43" stroke-width="1.5"/>
+                        <path d="M2 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <span class="reviewer-name">Bobby Flay</span>
+                    <!-- Star rating for reviewer -->
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7.65335 2.33268C7.68155 2.2639 7.72957 2.20506 7.7913 2.16365C7.85303 2.12224 7.92568 2.10013 8.00002 2.10013C8.07435 2.10013 8.14701 2.12224 8.20874 2.16365C8.27047 2.20506 8.31849 2.2639 8.34669 2.33268L9.76335 5.74001C9.78987 5.80377 9.83346 5.85897 9.88933 5.89955C9.9452 5.94013 10.0112 5.96451 10.08 5.97001L13.7587 6.26468C14.0914 6.29134 14.226 6.70668 13.9727 6.92334L11.17 9.32468C11.1177 9.36947 11.0786 9.42782 11.0572 9.49331C11.0358 9.55881 11.0329 9.62894 11.0487 9.69601L11.9054 13.286C11.9226 13.358 11.9181 13.4335 11.8924 13.503C11.8667 13.5725 11.821 13.6328 11.7611 13.6763C11.7012 13.7198 11.6297 13.7446 11.5557 13.7475C11.4817 13.7504 11.4085 13.7313 11.3454 13.6927L8.19535 11.7693C8.13651 11.7335 8.06893 11.7145 8.00002 11.7145C7.93111 11.7145 7.86353 11.7335 7.80469 11.7693L4.65469 13.6933C4.59152 13.732 4.51832 13.7511 4.44432 13.7482C4.37033 13.7452 4.29885 13.7205 4.23893 13.677C4.17901 13.6334 4.13333 13.5731 4.10765 13.5037C4.08198 13.4342 4.07747 13.3587 4.09469 13.2867L4.95135 9.69601C4.96724 9.62894 4.96432 9.55879 4.94291 9.49328C4.92151 9.42776 4.88244 9.36942 4.83002 9.32468L2.02735 6.92334C1.97123 6.87509 1.93063 6.81131 1.91065 6.74003C1.89068 6.66876 1.89222 6.59317 1.9151 6.52278C1.93797 6.45238 1.98114 6.39031 2.0392 6.34439C2.09725 6.29847 2.16758 6.27073 2.24135 6.26468L5.92002 5.97001C5.98885 5.96451 6.05483 5.94013 6.1107 5.89955C6.16657 5.85897 6.21017 5.80377 6.23669 5.74001L7.65335 2.33268Z" fill="#FAC832" stroke="#FAC832" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <!-- Review right column -->
+                  <div class="review-content">
+                    <div class="review-meta">
+                      <span class="review-title">Great Design</span>
+                      <span class="review-date">1. Februar 2026</span>
+                    </div>
+                    <p class="review-text">Really happy with this purchase. The cage is spacious and well-built, and the design looks great in the room.</p>
+                  </div>
+                </div>
+                <!-- Helpful -->
+                <div class="helpful-row">
+                  <span class="helpful-label">Was this helpful?</span>
+                  <div style="display:flex; align-items:center; gap:16px;">
+                    <div class="helpful-btn">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.32;">
+                        <path d="M10.667 6.667V3.333a1.333 1.333 0 0 0-1.334-1.333L6 6.667v6.666h4.587A1.333 1.333 0 0 0 11.92 12.2l.913-4a1.333 1.333 0 0 0-1.333-1.533h-0.833zM6 6.667H4a1.333 1.333 0 0 0-1.333 1.333v4a1.333 1.333 0 0 0 1.333 1.333H6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span class="helpful-count">0</span>
+                    </div>
+                    <div class="helpful-btn">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.32;">
+                        <path d="M5.333 9.333v3.334a1.333 1.333 0 0 0 1.334 1.333L10 9.333V2.667H5.413A1.333 1.333 0 0 0 4.08 3.8l-.913 4a1.333 1.333 0 0 0 1.333 1.533h0.833zM10 9.333h2a1.333 1.333 0 0 0 1.333-1.333v-4A1.333 1.333 0 0 0 12 2.667h-2" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span class="helpful-count">0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reviews footer -->
+            <div class="reviews-footer">
+              <a href="#" class="cta-btn bg-green" style="width:127px;">
+                <div class="btn-shadow"></div>
+                <div class="btn-face"><span>See more</span></div>
+              </a>
+              <button class="write-review-btn" onclick="openReviewModal()">
+                <span>Write a Review</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /lower-sections -->
+    </div><!-- /frame-12 -->
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="footer-nav-group">
+          <div class="footer-col">
+            <div class="footer-heading">Navigation</div>
+            <div class="footer-list">
+              <a href="index.html" class="footer-link">Home</a>
+              <a href="product.html" class="footer-link">Products</a>
+              <a href="catalogue.html" class="footer-link">Catalogue</a>
+              <a href="contact.html" class="footer-link">Contact Us</a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-heading">Address</div>
+            <div class="footer-address-list">
+              <span class="footer-address-item">Akademika Jovana Surutke 19, lokal 1</span>
+              <span class="footer-address-item">78000 Banja Luka</span>
+              <span class="footer-address-item">Bosnia and Hercegovina</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-follow">
+        <div class="footer-heading">Follow Us</div>
+        <div class="footer-social-icons">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <a href="#" aria-label="Facebook" style="opacity:0.6;display:flex;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/pote.pets/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="opacity:0.6;display:flex;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 11.37C16.1234 12.2021 15.9813 13.052 15.5938 13.7988C15.2063 14.5456 14.5931 15.1512 13.8416 15.5295C13.0901 15.9077 12.2384 16.0394 11.4078 15.9057C10.5771 15.7721 9.80977 15.3799 9.21485 14.785C8.61993 14.1901 8.22774 13.4227 8.09408 12.592C7.96042 11.7614 8.09208 10.9097 8.47034 10.1582C8.8486 9.40667 9.45419 8.79355 10.201 8.40605C10.9478 8.01856 11.7977 7.8764 12.63 7.99981C13.4789 8.1257 14.2649 8.52128 14.8717 9.12812C15.4785 9.73496 15.8741 10.5209 16 11.37Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17.5 6.5H17.51" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <span class="footer-copyright">© 2026 Pote. All rights reserved.</span>
+    </footer>
+
+  </div><!-- /content-section -->
+</div><!-- /page -->
+
+<!-- ── Write a Review modal ──────────────────────────────── -->
+<div class="modal-backdrop" id="review-modal" onclick="closeReviewModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Write a Review</span>
+      <div class="modal-close" onclick="closeReviewModalBtn()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L13 13M13 1L1 13" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Star rating picker -->
+    <div class="modal-field">
+      <span class="modal-label">Your rating</span>
+      <div class="star-picker" id="star-picker">
+        <svg class="star" data-value="1" onclick="setRating(1)" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01L12 2z"/>
+        </svg>
+        <svg class="star" data-value="2" onclick="setRating(2)" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01L12 2z"/>
+        </svg>
+        <svg class="star" data-value="3" onclick="setRating(3)" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01L12 2z"/>
+        </svg>
+        <svg class="star" data-value="4" onclick="setRating(4)" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01L12 2z"/>
+        </svg>
+        <svg class="star" data-value="5" onclick="setRating(5)" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.93 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.07-1.01L12 2z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="modal-field">
+      <span class="modal-label">Your name</span>
+      <input class="modal-input" type="text" placeholder="e.g. Jane Smith" />
+    </div>
+
+    <div class="modal-field">
+      <span class="modal-label">Review title</span>
+      <input class="modal-input" type="text" placeholder="Summarise your experience" />
+    </div>
+
+    <div class="modal-field">
+      <span class="modal-label">Your review</span>
+      <textarea class="modal-textarea" placeholder="What did you love (or not love) about this product?"></textarea>
+    </div>
+
+    <button class="modal-submit" onclick="submitReview()">Submit Review</button>
+  </div>
+</div>
+
+<script>
+  // Thumbnail click interaction
+  document.querySelectorAll('.thumb-wrap').forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      document.querySelectorAll('.thumb-wrap').forEach(function(t) {
+        t.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      document.querySelector('.main-image').src = this.querySelector('img').src;
+    });
+  });
+
+  // Color circle selection
+  document.querySelectorAll('.color-circle').forEach(function(circle) {
+    circle.addEventListener('click', function() {
+      document.querySelectorAll('.color-circle').forEach(function(c) {
+        c.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      document.querySelector('#size-label-value').previousElementSibling.previousElementSibling.nextElementSibling.nextElementSibling.textContent = this.getAttribute('title');
+    });
+  });
+
+  // Size dropdown
+  function toggleSizeDropdown() {
+    var dropdown = document.getElementById('size-dropdown');
+    var options  = document.getElementById('size-options');
+    var arrow    = document.getElementById('dropdown-arrow-icon');
+    var open     = options.classList.toggle('open');
+    dropdown.classList.toggle('open', open);
+    arrow.classList.toggle('open', open);
+  }
+
+  function selectSize(el) {
+    // Mark selected
+    document.querySelectorAll('.dropdown-option').forEach(function(o) {
+      o.classList.remove('selected');
+    });
+    el.classList.add('selected');
+
+    // Update visible text
+    document.getElementById('dropdown-main-text').textContent = el.dataset.main;
+    document.getElementById('dropdown-sub-text').textContent  = el.dataset.sub;
+    document.getElementById('size-label-value').textContent   = el.dataset.label;
+
+    // Close
+    document.getElementById('size-options').classList.remove('open');
+    document.getElementById('size-dropdown').classList.remove('open');
+    document.getElementById('dropdown-arrow-icon').classList.remove('open');
+  }
+
+  // Accordion toggle
+  function toggleAccordion(header) {
+    var item = header.closest('.accordion-item');
+    item.classList.toggle('open');
+  }
+
+  // Write a Review modal
+  function openReviewModal() {
+    document.getElementById('review-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReviewModalBtn() {
+    document.getElementById('review-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeReviewModal(e) {
+    if (e.target === document.getElementById('review-modal')) {
+      closeReviewModalBtn();
+    }
+  }
+
+  // Star rating
+  var currentRating = 0;
+  function setRating(value) {
+    currentRating = value;
+    document.querySelectorAll('.star-picker .star').forEach(function(star) {
+      star.classList.toggle('active', parseInt(star.dataset.value) <= value);
+    });
+  }
+
+  function submitReview() {
+    var name  = document.querySelector('.modal-input').value.trim();
+    var title = document.querySelectorAll('.modal-input')[1].value.trim();
+    var body  = document.querySelector('.modal-textarea').value.trim();
+    if (!currentRating || !name || !title || !body) {
+      alert('Please fill in all fields and select a rating.');
+      return;
+    }
+    closeReviewModalBtn();
+    // Reset form
+    document.querySelectorAll('.modal-input').forEach(function(i) { i.value = ''; });
+    document.querySelector('.modal-textarea').value = '';
+    document.querySelectorAll('.star').forEach(function(s) { s.classList.remove('active'); });
+    currentRating = 0;
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.size-dropdown-wrap')) {
+      document.getElementById('size-options').classList.remove('open');
+      document.getElementById('size-dropdown').classList.remove('open');
+      document.getElementById('dropdown-arrow-icon').classList.remove('open');
+    }
+  });
+</script>
+</body>
+</html>

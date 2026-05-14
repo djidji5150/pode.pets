@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pote – Carry Them With Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #E6DDD8;
+      font-family: 'Inter', sans-serif;
+      min-height: 100%;
+    }
+
+    /* ─── Page wrapper ─────────────────────────────────── */
+    .page {
+      width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      padding: 136px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* ─── Navbar ───────────────────────────────────────── */
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 80px 0;
+      background: #E6DDD8;
+    }
+
+    .logo-wrap {
+      width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .logo-wrap img { width: 100%; height: auto; }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      padding-bottom: 2px;
+      border-bottom: 2px solid #0B3A43;
+    }
+
+    /* Layered CTA button */
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      padding: 4px 8px 8px;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .cta-btn .btn-shadow {
+      position: absolute;
+      background: #0B3A43;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      bottom: 0;
+      left: 4px;
+      right: 0;
+      top: 8px;
+    }
+
+    .cta-btn .btn-face {
+      position: relative;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cta-btn .btn-face span {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+      white-space: nowrap;
+    }
+
+    .cta-btn.bg-beige .btn-face { background: #E6DDD8; }
+    .cta-btn.bg-green  .btn-face { background: #A0CE7A; }
+    .cta-btn.bg-pink   .btn-face { background: #E7AAC4; }
+    .cta-btn.bg-teal   .btn-face { background: #5BD1D4; }
+
+    /* ─── Content column ───────────────────────────────── */
+    .content-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-self: stretch;
+      gap: 240px;
+      padding: 40px 0 0;
+    }
+
+    /* ─── Hero ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      width: 1280px;
+      height: 922px;
+      flex-shrink: 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      left: 0;
+      top: 442px;
+      width: 1280px;
+      height: 480px;
+      border-radius: 48px;
+      object-fit: cover;
+    }
+
+    .hero-title {
+      position: absolute;
+      left: 308.5px;
+      top: 4px;
+      width: 663px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 120px;
+      line-height: 100%;
+      text-align: center;
+      color: #0B3A43;
+    }
+
+    .hero-desc {
+      position: absolute;
+      left: 462px;
+      top: 276px;
+      width: 356px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 140%;
+      text-align: center;
+      color: #0B3A43;
+    }
+
+    .hero-cta {
+      position: absolute;
+      left: 577.5px;
+      top: 358px;
+    }
+
+    .hero-ill-1 {
+      position: absolute;
+      left: 122px;
+      top: 0;
+      width: 248.3px;
+      height: 248.3px;
+      object-fit: contain;
+    }
+
+    .hero-ill-2 {
+      position: absolute;
+      left: 922px;
+      top: 224px;
+      width: 181.81px;
+      height: 108.6px;
+      object-fit: contain;
+    }
+
+    .hero-pills {
+      position: absolute;
+      left: 32px;
+      top: 858px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      background: rgba(230, 221, 216, 0.08);
+      border: 1px solid rgba(230, 221, 216, 0.48);
+      border-radius: 100px;
+      backdrop-filter: blur(32px);
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 100%;
+      color: #E6DDD8;
+    }
+
+    /* ─── Images section ───────────────────────────────── */
+    .img-section {
+      position: relative;
+      width: 960px;
+      height: 560px;
+      flex-shrink: 0;
+    }
+
+    .circle-group {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 560px;
+      height: 560px;
+    }
+
+    .circle-1 {
+      position: absolute;
+      left: 50px;
+      top: 50px;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #5BD1D4;
+    }
+
+    .circle-2 {
+      position: absolute;
+      left: 44.73px;
+      top: -33.51px;
+      width: 470.55px;
+      height: 470.55px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #5BD1D4;
+    }
+
+    .rect-group {
+      position: absolute;
+      left: 400px;
+      top: 0;
+      width: 560px;
+      height: 560px;
+    }
+
+    .rect-1 {
+      position: absolute;
+      left: 40px;
+      top: 40px;
+      width: 480px;
+      height: 480px;
+      border-radius: 48px;
+      object-fit: cover;
+      background: #E7AAC4;
+    }
+
+    .rect-2 {
+      position: absolute;
+      left: 40px;
+      top: -27.6px;
+      width: 480px;
+      height: 450.11px;
+      border-radius: 48px;
+      object-fit: cover;
+      background: #E7AAC4;
+    }
+
+    .img-ill-3 {
+      position: absolute;
+      left: -10.45px;
+      top: 21.45px;
+      width: 198.51px;
+      height: 180.86px;
+      object-fit: contain;
+    }
+
+    .img-ill-4 {
+      position: absolute;
+      left: 756.21px;
+      top: 323.64px;
+      width: 163.79px;
+      height: 149.14px;
+      object-fit: contain;
+    }
+
+    /* ─── Row sections (Travel Safe / Durable) ──────────── */
+    .row-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      align-self: stretch;
+      padding: 0 80px;
+      position: relative;
+    }
+
+    .section-img {
+      width: 560px;
+      height: 480px;
+      border-radius: 48px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .section-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      width: 560px;
+    }
+
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 80px;
+      line-height: 100%;
+      color: #0B3A43;
+    }
+
+    .section-body {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      color: #0B3A43;
+    }
+
+    /* ─── Full-width image + banner strip ───────────────── */
+    .banner-section {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      gap: 40px;
+    }
+
+    .full-img {
+      width: 1280px;
+      height: 480px;
+      border-radius: 48px;
+      object-fit: cover;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    .ticker-wrap {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      animation: ticker 18s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-shrink: 0;
+    }
+
+    .ticker-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 120px;
+      line-height: 100%;
+      color: #0B3A43;
+      white-space: nowrap;
+    }
+
+    .ticker-divider {
+      width: 160px;
+      height: 160px;
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── Inner content section (full-image row) ─────────── */
+    .content-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      align-self: stretch;
+      gap: 40px;
+    }
+
+    /* ─── Color section ─────────────────────────────────── */
+    .color-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      align-self: stretch;
+      gap: 80px;
+      padding: 0 80px;
+    }
+
+    .color-swatches {
+      position: relative;
+      width: 440px;
+      height: 240px;
+      flex-shrink: 0;
+    }
+
+    .swatch {
+      position: absolute;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .swatch-left {
+      width: 160px;
+      height: 160px;
+      left: 0;
+      top: 52px;
+      filter: blur(4px);
+    }
+
+    .swatch-center {
+      width: 240px;
+      height: 240px;
+      left: 100px;
+      top: 0;
+      z-index: 1;
+    }
+
+    .swatch-right {
+      width: 160px;
+      height: 160px;
+      left: 280px;
+      top: 52px;
+      filter: blur(4px);
+    }
+
+    .color-txt {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 560px;
+      height: 351px;
+    }
+
+    .color-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 80px;
+      line-height: 100%;
+      text-align: center;
+      color: #0B3A43;
+    }
+
+    .color-body {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      text-align: center;
+      color: #0B3A43;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────── */
+    .footer {
+      width: 1280px;
+      background: #0B3A43;
+      border-radius: 48px;
+      padding: 80px;
+      align-self: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .footer-main {
+      display: flex;
+      flex-direction: row;
+      align-self: stretch;
+      gap: 80px;
+    }
+
+    .footer-nav-group {
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
+      flex: 1;
+    }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 140%;
+      color: #E6DDD8;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-link,
+    .footer-address-item {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      color: #E6DDD8;
+      text-decoration: none;
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-address-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-copyright {
+      position: absolute;
+      right: 80px;
+      bottom: 80px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 140%;
+      color: rgba(230, 221, 216, 0.48);
+    }
+
+    .footer-follow {
+      position: absolute;
+      right: 80px;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-social-icons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-social-icons img {
+      width: auto;
+      height: 24px;
+      filter: invert(1) sepia(1) saturate(0) brightness(2);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Navbar ─────────────────────────────────────── -->
+    <nav class="navbar">
+      <div class="logo-wrap">
+        <img src="images/logo.svg" alt="Pote" />
+      </div>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="product.html" class="nav-link">Products</a>
+        <a href="catalogue.html" class="nav-link">Catalogue</a>
+        <a href="contact.html" class="cta-btn bg-beige">
+          <div class="btn-shadow"></div>
+          <div class="btn-face"><span>Contact Us</span></div>
+        </a>
+      </div>
+    </nav>
+
+    <!-- ── Content column ────────────────────────────── -->
+    <div class="content-col">
+
+      <!-- Hero -->
+      <div class="hero">
+        <img class="hero-bg" src="images/hero-bg.png" alt="Pet transport cage" />
+        <img class="hero-ill-1" src="images/illustration-1.svg" alt="" />
+        <h1 class="hero-title">Carry them<br>with care.</h1>
+        <p class="hero-desc">Durable and comfortable transport cages<br>made for pets who love adventures.</p>
+        <div class="hero-cta">
+          <a href="#" class="cta-btn bg-green">
+            <div class="btn-shadow"></div>
+            <div class="btn-face"><span>See more</span></div>
+          </a>
+        </div>
+        <img class="hero-ill-2" src="images/illustration-2.svg" alt="" />
+        <div class="hero-pills">
+          <span class="pill">#dogs</span>
+          <span class="pill">#bigsize</span>
+        </div>
+      </div>
+
+      <!-- Images mosaic -->
+      <div class="img-section">
+        <div class="circle-group">
+          <img class="circle-2" src="images/circle-img-1.png" alt="Pet" />
+          <img class="circle-1" src="images/circle-img-1.png" alt="Pet" />
+        </div>
+        <div class="rect-group">
+          <img class="rect-2" src="images/img-3.png" alt="Pet in cage" />
+          <img class="rect-1" src="images/img-3.png" alt="Pet in cage" />
+        </div>
+        <img class="img-ill-3" src="images/illustration-3.svg" alt="" />
+        <img class="img-ill-4" src="images/illustration-4.svg" alt="" />
+      </div>
+
+      <!-- Travel Safe section -->
+      <div class="row-section">
+        <img class="section-img" src="images/travel-safe.png" alt="Travel safe with Pote" />
+        <div class="section-txt">
+          <h2 class="section-title">Travel Safe<br>with Pote</h2>
+          <p class="section-body">At Pote, we believe that traveling with your pet should always be safe, comfortable, and stress-free. Our transport cages are carefully designed to provide maximum protection while ensuring your pet feels secure during every journey.</p>
+          <a href="#" class="cta-btn bg-pink" style="width: 127px;">
+            <div class="btn-shadow"></div>
+            <div class="btn-face"><span>See more</span></div>
+          </a>
+        </div>
+        <!-- Floating pills -->
+        <div style="position:absolute; right: 80px; bottom: 0; display:flex; gap:8px;">
+          <span class="pill">#cats</span>
+          <span class="pill">#smallsize</span>
+        </div>
+        <!-- Floating illustration -->
+        <img src="images/illustration-5.svg" alt="" style="position:absolute; right: 80px; top: 50%; transform:translateY(-50%); width:181px; height:181px; object-fit:contain; pointer-events:none;" />
+      </div>
+
+      <!-- Full-width image + rotating banner -->
+      <div class="content-inner">
+        <div class="row-section" style="padding: 0 80px;">
+          <img class="full-img" src="images/banner.png" alt="Pote pets" style="width:1280px;" />
+        </div>
+        <div class="ticker-wrap">
+          <div class="ticker-track">
+            <!-- Two copies for seamless loop -->
+            <div class="ticker-item">
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+            </div>
+            <div class="ticker-item">
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+              <span class="ticker-text">Carry them with care.</span>
+              <svg class="ticker-divider" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="80" r="72" stroke="#0B3A43" stroke-width="4"/>
+                <circle cx="80" cy="80" r="16" fill="#0B3A43"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strong and Durable section -->
+      <div class="row-section">
+        <img class="section-img" src="images/durable.png" alt="Strong and durable Pote cage" />
+        <div class="section-txt">
+          <h2 class="section-title">Strong and<br>Durable</h2>
+          <p class="section-body">Made from high-quality materials, Pote cages are built to last. The durable construction ensures stability and reliability even with regular use.</p>
+          <a href="#" class="cta-btn bg-teal" style="width: 127px;">
+            <div class="btn-shadow"></div>
+            <div class="btn-face"><span>See more</span></div>
+          </a>
+        </div>
+        <!-- Floating arrow icon -->
+        <div style="position:absolute; left: calc(560px + 80px); bottom: 208px; width:64px; height:64px; background:rgba(230,221,216,0.08); border:1px solid rgba(230,221,216,0.48); border-radius:100px; backdrop-filter:blur(32px); display:flex; align-items:center; justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Choose Your Color section -->
+      <div class="color-section">
+        <div class="color-swatches">
+          <img class="swatch swatch-left"   src="images/color-2.png" alt="Color option" />
+          <img class="swatch swatch-center" src="images/color-3.png" alt="Color option" />
+          <img class="swatch swatch-right"  src="images/color-1.png" alt="Color option" />
+        </div>
+        <div class="color-txt">
+          <h2 class="color-title">Choose<br>Your Color</h2>
+          <p class="color-body">Pote transport cages are available in a variety of colors so you can choose the style that fits you and your pet best. Whether you prefer something classic or something more vibrant, there's a Pote cage to match your taste.</p>
+          <a href="#" class="cta-btn bg-green" style="width: 127px;">
+            <div class="btn-shadow"></div>
+            <div class="btn-face"><span>See more</span></div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-main">
+          <div class="footer-nav-group">
+            <!-- Navigation column -->
+            <div class="footer-col">
+              <div class="footer-heading">Navigation</div>
+              <div class="footer-list">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="product.html" class="footer-link">Products</a>
+                <a href="catalogue.html" class="footer-link">Catalogue</a>
+                <a href="contact.html" class="footer-link">Contact Us</a>
+              </div>
+            </div>
+            <!-- Address column -->
+            <div class="footer-col">
+              <div class="footer-heading">Address</div>
+              <div class="footer-address-list">
+                <span class="footer-address-item">Akademika Jovana Surutke 19, lokal 1</span>
+                <span class="footer-address-item">78000 Banja Luka</span>
+                <span class="footer-address-item">Bosnia and Hercegovina</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Follow Us (absolute top-right) -->
+        <div class="footer-follow">
+          <div class="footer-heading">Follow Us</div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <a href="#" aria-label="Facebook" style="opacity:0.6;display:flex;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/pote.pets/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="opacity:0.6;display:flex;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 11.37C16.1234 12.2021 15.9813 13.052 15.5938 13.7988C15.2063 14.5456 14.5931 15.1512 13.8416 15.5295C13.0901 15.9077 12.2384 16.0394 11.4078 15.9057C10.5771 15.7721 9.80977 15.3799 9.21485 14.785C8.61993 14.1901 8.22774 13.4227 8.09408 12.592C7.96042 11.7614 8.09208 10.9097 8.47034 10.1582C8.8486 9.40667 9.45419 8.79355 10.201 8.40605C10.9478 8.01856 11.7977 7.8764 12.63 7.99981C13.4789 8.1257 14.2649 8.52128 14.8717 9.12812C15.4785 9.73496 15.8741 10.5209 16 11.37Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17.5 6.5H17.51" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <!-- Copyright (absolute bottom-right) -->
+        <span class="footer-copyright">© 2026 Pote. All rights reserved.</span>
+      </footer>
+
+    </div><!-- /content-col -->
+  </div><!-- /page -->
+</body>
+</html>

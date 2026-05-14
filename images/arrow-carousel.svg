@@ -1,0 +1,16 @@
+<svg width="88" height="40" viewBox="0 0 88 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-32" y="-32" width="104" height="104"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(16px);clip-path:url(#bgblur_0_193_404_clip_path);height:100%;width:100%"></div></foreignObject><g data-figma-bg-blur-radius="32">
+<rect width="40" height="40" rx="20" transform="matrix(-1 0 0 1 40 0)" fill="#E6DDD8" fill-opacity="0.08"/>
+<rect x="-0.5" y="0.5" width="39" height="39" rx="19.5" transform="matrix(-1 0 0 1 39 0)" stroke="#E6DDD8" stroke-opacity="0.48"/>
+<path d="M22 14L16 20L22 26" stroke="#E6DDD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<foreignObject x="16" y="-32" width="104" height="104"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(16px);clip-path:url(#bgblur_1_193_404_clip_path);height:100%;width:100%"></div></foreignObject><g data-figma-bg-blur-radius="32">
+<rect x="48" width="40" height="40" rx="20" fill="#E6DDD8" fill-opacity="0.08"/>
+<rect x="48.5" y="0.5" width="39" height="39" rx="19.5" stroke="#E6DDD8" stroke-opacity="0.48"/>
+<path d="M66 14L72 20L66 26" stroke="#E6DDD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_193_404_clip_path" transform="translate(32 32)"><rect width="40" height="40" rx="20" transform="matrix(-1 0 0 1 40 0)"/>
+</clipPath><clipPath id="bgblur_1_193_404_clip_path" transform="translate(-16 32)"><rect x="48" width="40" height="40" rx="20"/>
+</clipPath></defs>
+</svg>
