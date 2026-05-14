@@ -6,36 +6,37 @@
   <title>Contact Us – Pote</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
       background: #E6DDD8;
       font-family: 'Inter', sans-serif;
-      min-height: 100%;
     }
 
+    /* ─── Page ─────────────────────────────────────────── */
     .page {
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
       position: relative;
+      padding: 136px 0 80px;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      gap: 40px;
     }
 
-    /* ─── Navbar ─────────────────────────────────────────── */
+    /* ─── Navbar ────────────────────────────────────────── */
     .navbar {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 40px 80px 0;
       background: #E6DDD8;
-      position: sticky;
-      top: 0;
       z-index: 200;
     }
 
@@ -48,11 +49,7 @@
     }
     .logo-wrap img { width: 100%; height: auto; }
 
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-    }
+    .nav-menu { display: flex; align-items: center; gap: 48px; }
 
     .nav-link {
       font-weight: 500;
@@ -61,22 +58,84 @@
       color: #0B3A43;
       text-decoration: none;
     }
+    .nav-link.active { padding-bottom: 2px; border-bottom: 2px solid #0B3A43; }
 
-    .nav-link.active {
-      padding-bottom: 2px;
-      border-bottom: 2px solid #0B3A43;
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      padding: 4px 8px 8px;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
     }
+    .cta-btn .btn-shadow {
+      position: absolute;
+      background: #0B3A43;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      bottom: 0; left: 4px; right: 0; top: 8px;
+    }
+    .cta-btn .btn-face {
+      position: relative;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cta-btn .btn-face span {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 100%;
+      color: #0B3A43;
+      white-space: nowrap;
+    }
+    .cta-btn.bg-beige .btn-face { background: #E6DDD8; }
 
-    /* ─── Hero banner ────────────────────────────────────── */
-    .contact-hero {
+    /* ─── Content section ───────────────────────────────── */
+    .content-section {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      padding: 80px 80px 0;
+      align-items: center;
+      align-self: stretch;
+      gap: 80px;
     }
 
-    .contact-eyebrow {
-      font-family: 'Inter', sans-serif;
+    /* ─── Hero ──────────────────────────────────────────── */
+    .contact-hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 80px;
+      width: 100%;
+      min-height: 362px;
+      overflow: hidden;
+    }
+
+    .hero-deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-deco-left  { left: 308px;  top: 70px;  width: 124px; height: 137px; }
+    .hero-deco-right { right: 248px; bottom: 10px; width: 177px; height: 126px; }
+
+    /* Paw deco (CSS-drawn, since exported PNG is transparent) */
+    .hero-deco svg { opacity: 0.12; }
+
+    .hero-txt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
       font-weight: 500;
       font-size: 16px;
       line-height: 140%;
@@ -85,88 +144,48 @@
       color: rgba(11, 58, 67, 0.55);
     }
 
-    .contact-title {
+    .hero-title {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
-      font-size: 80px;
-      line-height: 92%;
+      font-size: 120px;
+      line-height: 100%;
       color: #0B3A43;
     }
 
-    .contact-subtitle {
+    .hero-subtitle {
       font-weight: 400;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 140%;
-      color: rgba(11, 58, 67, 0.7);
-      max-width: 520px;
-      margin-top: 8px;
+      color: #0B3A43;
+      max-width: 600px;
+      text-align: center;
     }
 
-    /* ─── Main content area ──────────────────────────────── */
+    /* ─── Body row ──────────────────────────────────────── */
     .contact-body {
       display: flex;
       flex-direction: row;
       gap: 80px;
-      padding: 64px 80px 80px;
-      flex: 1;
+      padding: 0 80px;
+      align-self: stretch;
+      align-items: flex-start;
     }
 
-    /* ─── Left: info cards ──────────────────────────────── */
-    .contact-info {
+    /* ─── Form column ───────────────────────────────────── */
+    .contact-form-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-inner {
       display: flex;
       flex-direction: column;
       gap: 24px;
-      width: 340px;
-      flex-shrink: 0;
     }
 
-    .info-card {
-      background: #0B3A43;
-      border-radius: 32px;
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .info-card-icon {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(230, 221, 216, 0.12);
-      border-radius: 12px;
-    }
-
-    .info-card-label {
-      font-weight: 500;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(230, 221, 216, 0.5);
-    }
-
-    .info-card-value {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 20px;
-      color: #E6DDD8;
-      text-decoration: none;
-      word-break: break-all;
-    }
-
-    a.info-card-value:hover { opacity: 0.8; }
-
-    /* ─── Right: form ───────────────────────────────────── */
-    .contact-form-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .form-row {
+    .form-row-2 {
       display: flex;
       flex-direction: row;
       gap: 24px;
@@ -177,25 +196,25 @@
       flex-direction: column;
       gap: 10px;
       flex: 1;
+      min-width: 0;
     }
 
     .form-label {
       font-weight: 500;
-      font-size: 16px;
-      line-height: 140%;
-      color: #0B3A43;
+      font-size: 15px;
+      color: rgba(11, 58, 67, 0.7);
     }
 
     .form-input,
     .form-textarea {
       width: 100%;
-      background: #D5C9C3;
-      border: 1.5px solid rgba(11, 58, 67, 0.2);
-      border-radius: 16px;
-      padding: 16px 20px;
+      background: rgba(11, 58, 67, 0.06);
+      border: 1.5px solid rgba(11, 58, 67, 0.15);
+      border-radius: 12px;
+      padding: 14px 18px;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 140%;
       color: #0B3A43;
       outline: none;
@@ -203,128 +222,121 @@
     }
 
     .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: rgba(11, 58, 67, 0.38);
-    }
+    .form-textarea::placeholder { color: rgba(11, 58, 67, 0.35); }
 
     .form-input:focus,
     .form-textarea:focus {
       border-color: #0B3A43;
-      background: #ccc0b9;
+      background: rgba(11, 58, 67, 0.04);
     }
 
     .form-textarea {
       resize: vertical;
-      min-height: 180px;
+      min-height: 160px;
     }
 
-    .form-submit-wrap {
+    .form-submit-row {
       display: flex;
       align-items: center;
       gap: 24px;
     }
 
-    /* Layered CTA button (same as home page) */
-    .cta-btn {
-      position: relative;
-      display: inline-flex;
-      padding: 4px 8px 8px;
-      border-radius: 100px;
-      cursor: pointer;
-      text-decoration: none;
-      border: none;
-      background: none;
-      font-family: inherit;
-    }
-
-    .btn-shadow {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: #0B3A43;
-      top: 4px;
-    }
-
-    .btn-face {
-      position: relative;
+    .form-submit-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      border-radius: 100px;
-      padding: 14px 32px;
+      gap: 10px;
+      padding: 16px 40px;
       background: #0B3A43;
-      transition: transform 0.15s;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #E6DDD8;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .form-submit-btn:hover { opacity: 0.85; }
+    .form-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-success {
+      display: none;
+      padding: 14px 20px;
+      background: #A0CE7A;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      color: #0B3A43;
+      flex: 1;
+    }
+    .form-success.show { display: block; }
+
+    /* ─── Info card ─────────────────────────────────────── */
+    .info-card {
+      background: #0B3A43;
+      border-radius: 32px;
+      padding: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+      flex-shrink: 0;
+      width: 400px;
     }
 
-    .btn-face span {
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-icon-wrap {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(230, 221, 216, 0.12);
+      border-radius: 10px;
+    }
+
+    .info-label {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
       font-size: 20px;
-      line-height: 100%;
       color: #E6DDD8;
-      white-space: nowrap;
+      text-decoration: none;
+      display: block;
+      transition: opacity 0.2s;
     }
+    .info-label:hover { opacity: 0.8; }
 
-    .cta-btn:hover .btn-face { transform: translateY(-2px); }
-    .cta-btn:active .btn-face { transform: translateY(1px); }
-
-    .bg-green .btn-shadow { background: #093038; }
-    .bg-green .btn-face   { background: #0B3A43; }
-
-    .form-note {
-      font-size: 14px;
-      color: rgba(11, 58, 67, 0.5);
-      line-height: 140%;
-    }
-
-    /* ─── Success banner (hidden by default) ─────────────── */
-    .success-banner {
-      display: none;
-      align-items: center;
-      gap: 16px;
-      background: rgba(11, 58, 67, 0.08);
-      border: 1.5px solid rgba(11, 58, 67, 0.2);
-      border-radius: 16px;
-      padding: 20px 24px;
-    }
-
-    .success-banner.show { display: flex; }
-
-    .success-banner p {
+    .info-link-green {
       font-weight: 500;
-      font-size: 16px;
-      color: #0B3A43;
+      font-size: 20px;
+      color: #A0CE7A;
+      text-decoration: underline;
+      display: block;
+      transition: opacity 0.2s;
     }
+    .info-link-green:hover { opacity: 0.8; }
 
-    /* ─── Hamburger ─────────────────────────────────────── */
-    .nav-toggle {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer; padding: 8px;
-    }
-    .nav-toggle span {
-      display: block; width: 26px; height: 2px;
-      background: #0B3A43; border-radius: 2px;
-      transition: transform 0.25s, opacity 0.2s;
-    }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ─── Footer ─────────────────────────────────────────── */
+    /* ─── Footer ────────────────────────────────────────── */
     .footer {
+      width: min(1280px, calc(100% - 160px));
       background: #0B3A43;
-      border-radius: 48px 48px 0 0;
+      border-radius: 48px;
       padding: 80px;
+      align-self: center;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
+      flex-shrink: 0;
     }
 
     .footer-main {
       display: flex;
       flex-direction: row;
+      align-self: stretch;
       gap: 80px;
     }
 
@@ -332,17 +344,15 @@
       display: flex;
       flex-direction: row;
       gap: 80px;
+      flex: 1;
     }
 
-    .footer-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .footer-col { display: flex; flex-direction: column; gap: 16px; }
 
     .footer-heading {
-      font-weight: 500;
-      font-size: 20px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
       line-height: 140%;
       color: #E6DDD8;
       height: 32px;
@@ -350,11 +360,7 @@
       align-items: center;
     }
 
-    .footer-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .footer-list { display: flex; flex-direction: column; gap: 8px; }
 
     .footer-link,
     .footer-address-item {
@@ -368,11 +374,7 @@
       align-items: center;
     }
 
-    .footer-address-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .footer-address-list { display: flex; flex-direction: column; gap: 10px; }
 
     .footer-copyright {
       position: absolute;
@@ -393,23 +395,52 @@
       gap: 16px;
     }
 
-    /* ─── Tablet 768–1199px ──────────────────────────────── */
+    .footer-social-icons { display: flex; gap: 16px; align-items: center; }
+
+    /* ─── Hamburger ─────────────────────────────────────── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 201;
+    }
+    .nav-toggle span {
+      display: block; width: 26px; height: 2px;
+      background: #0B3A43; border-radius: 2px;
+      transition: transform 0.25s, opacity 0.2s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── Tablet 768–1199px ─────────────────────────────── */
     @media (max-width: 1199px) {
       .navbar { padding: 28px 40px 0; }
       .nav-menu { gap: 28px; }
       .nav-link { font-size: 17px; }
-      .contact-hero { padding: 60px 40px 0; }
-      .contact-title { font-size: 60px; }
-      .contact-body { padding: 48px 40px 60px; gap: 48px; }
-      .contact-info { width: 280px; }
-      .footer { padding: 60px; }
+
+      .contact-hero { padding: 40px; min-height: 280px; }
+      .hero-title { font-size: 80px; }
+      .hero-deco-left  { left: 40px; }
+      .hero-deco-right { right: 40px; }
+
+      .contact-body { padding: 0 40px; gap: 48px; }
+      .info-card { width: 320px; padding: 48px; }
+
+      .footer { width: min(1280px, calc(100% - 80px)); padding: 60px; }
       .footer-follow { right: 60px; top: 60px; }
       .footer-copyright { right: 60px; bottom: 60px; }
     }
 
-    /* ─── Mobile < 768px ─────────────────────────────────── */
+    /* ─── Mobile < 768px ────────────────────────────────── */
     @media (max-width: 767px) {
-      .navbar { padding: 14px 20px; position: sticky; box-shadow: 0 1px 0 rgba(11,58,67,0.1); }
+      .page { padding: 70px 0 40px; }
+
+      .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 14px 20px; box-shadow: 0 1px 0 rgba(11,58,67,0.1); }
       .logo-wrap { width: 80px; }
       .nav-toggle { display: flex; }
       .nav-menu {
@@ -421,20 +452,19 @@
       .nav-menu.open { display: flex; }
       .nav-link { font-size: 18px; }
 
-      .contact-hero { padding: 32px 20px 0; gap: 10px; }
-      .contact-eyebrow { font-size: 13px; }
-      .contact-title { font-size: 44px; }
-      .contact-subtitle { font-size: 16px; }
+      .content-section { gap: 48px; }
 
-      .contact-body { flex-direction: column; padding: 32px 20px 48px; gap: 32px; }
-      .contact-info { width: 100%; }
-      .info-card { padding: 24px; border-radius: 24px; }
+      .contact-hero { padding: 32px 20px; min-height: auto; }
+      .hero-title { font-size: 52px; }
+      .hero-subtitle { font-size: 16px; }
+      .hero-deco { display: none; }
 
-      .form-row { flex-direction: column; gap: 16px; }
-      .form-input, .form-textarea { font-size: 16px; padding: 13px 16px; }
-      .form-submit-wrap { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .contact-body { flex-direction: column; padding: 0 20px; gap: 32px; }
+      .form-row-2 { flex-direction: column; gap: 16px; }
 
-      .footer { padding: 40px 24px 40px; border-radius: 28px; width: calc(100% - 40px); margin: 0 auto; gap: 28px; }
+      .info-card { width: 100%; padding: 36px 28px; gap: 40px; }
+
+      .footer { width: calc(100% - 40px); border-radius: 28px; padding: 40px 24px; margin: 0 auto; gap: 28px; }
       .footer-main { flex-direction: column; gap: 28px; }
       .footer-nav-group { flex-direction: column; gap: 28px; }
       .footer-follow { position: relative; right: auto; top: auto; margin-top: 0; }
@@ -447,7 +477,7 @@
 <body>
 <div class="page">
 
-  <!-- Navbar -->
+  <!-- ── Navbar ─────────────────────────────────────────── -->
   <nav class="navbar">
     <a href="index.html" class="logo-wrap">
       <img src="images/logo.svg" alt="Pote" />
@@ -459,166 +489,195 @@
       <a href="index.html" class="nav-link">Home</a>
       <a href="product.html" class="nav-link">Products</a>
       <a href="catalogue.html" class="nav-link">Catalogue</a>
-      <a href="contact.html" class="nav-link active">Contact Us</a>
+      <a href="contact.html" class="cta-btn bg-beige">
+        <div class="btn-shadow"></div>
+        <div class="btn-face"><span>Contact Us</span></div>
+      </a>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <div class="contact-hero" style="margin-top: 96px;">
-    <span class="contact-eyebrow">Get in touch</span>
-    <h1 class="contact-title">Contact Us</h1>
-    <p class="contact-subtitle">Have a question, want to place a bulk order, or just want to say hi? Drop us a message and we'll get back to you shortly.</p>
-  </div>
+  <!-- ── Content ────────────────────────────────────────── -->
+  <div class="content-section">
 
-  <!-- Body -->
-  <div class="contact-body">
+    <!-- ── Frame 12 ─────────────────────────────────────── -->
+    <div style="display:flex;flex-direction:column;align-items:center;align-self:stretch;gap:80px;">
 
-    <!-- Info cards -->
-    <div class="contact-info">
-      <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M22 6L12 13L2 6" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- ── Hero ─────────────────────────────────────── -->
+      <div class="contact-hero">
+        <!-- Decorative left paw deco -->
+        <div class="hero-deco hero-deco-left">
+          <svg width="124" height="137" viewBox="0 0 124 137" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="62" cy="95" rx="28" ry="22" fill="#0B3A43"/>
+            <ellipse cx="28" cy="55" rx="12" ry="16" fill="#0B3A43"/>
+            <ellipse cx="50" cy="38" rx="12" ry="16" fill="#0B3A43"/>
+            <ellipse cx="74" cy="38" rx="12" ry="16" fill="#0B3A43"/>
+            <ellipse cx="96" cy="55" rx="12" ry="16" fill="#0B3A43"/>
           </svg>
         </div>
-        <span class="info-card-label">Email</span>
-        <a href="mailto:info@asg-global.ba" class="info-card-value">info@asg-global.ba</a>
-      </div>
-
-      <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Decorative right deco -->
+        <div class="hero-deco hero-deco-right">
+          <svg width="177" height="126" viewBox="0 0 177 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="88" cy="63" r="50" stroke="#0B3A43" stroke-width="2"/>
+            <circle cx="88" cy="63" r="35" stroke="#0B3A43" stroke-width="2"/>
+            <circle cx="88" cy="63" r="20" fill="#0B3A43"/>
           </svg>
         </div>
-        <span class="info-card-label">Address</span>
-        <span class="info-card-value" style="font-size:17px;font-family:'Inter',sans-serif;font-weight:400;">Akademika Jovana Surutke 19, lokal 1<br>78000 Banja Luka<br>Bosnia and Herzegovina</span>
-      </div>
 
-      <div class="info-card">
-        <div class="info-card-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 11.37C16.1234 12.2021 15.9813 13.052 15.5938 13.7988C15.2063 14.5456 14.5931 15.1512 13.8416 15.5295C13.0901 15.9077 12.2384 16.0394 11.4078 15.9057C10.5771 15.7721 9.80977 15.3799 9.21485 14.785C8.61993 14.1901 8.22774 13.4227 8.09408 12.592C7.96042 11.7614 8.09208 10.9097 8.47034 10.1582C8.8486 9.40667 9.45419 8.79355 10.201 8.40605C10.9478 8.01856 11.7977 7.8764 12.63 7.99981C13.4789 8.1257 14.2649 8.52128 14.8717 9.12812C15.4785 9.73496 15.8741 10.5209 16 11.37Z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M17.5 6.5H17.51" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <div class="hero-txt">
+          <span class="hero-eyebrow">Get in touch</span>
+          <h1 class="hero-title">Contact Us</h1>
+          <p class="hero-subtitle">Have a question, want to place a bulk order, or just want to say hi?<br>Drop us a message and we'll get back to you shortly.</p>
         </div>
-        <span class="info-card-label">Follow us</span>
-        <a href="https://www.instagram.com/pote.pets/" target="_blank" rel="noopener noreferrer" class="info-card-value">@pote.pets</a>
-      </div>
-    </div>
-
-    <!-- Contact form -->
-    <div class="contact-form-wrap">
-      <div class="success-banner" id="success-banner">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M22 4L12 14.01L9 11.01" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <p>Your message has been sent! We'll get back to you as soon as possible.</p>
       </div>
 
-      <form
-        action="https://formsubmit.co/info@asg-global.ba"
-        method="POST"
-        id="contact-form"
-        onsubmit="handleSubmit(event)"
-      >
-        <!-- formsubmit config -->
-        <input type="hidden" name="_subject" value="New message from Pote website">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" style="display:none">
+      <!-- ── Body ─────────────────────────────────────── -->
+      <div class="contact-body">
 
-        <div style="display:flex;flex-direction:column;gap:24px;">
-          <div class="form-row">
-            <div class="form-field">
-              <label class="form-label" for="first-name">First name</label>
-              <input class="form-input" type="text" id="first-name" name="first_name" placeholder="Your first name" required />
+        <!-- LEFT: Form -->
+        <div class="contact-form-col">
+          <form class="form-inner" id="contact-form" action="https://formsubmit.co/ajax/info@asg-global.ba" method="POST">
+            <input type="hidden" name="_subject" value="New Contact Message – Pote" />
+            <input type="hidden" name="_captcha" value="false" />
+
+            <!-- First + Last name -->
+            <div class="form-row-2">
+              <div class="form-field">
+                <label class="form-label" for="first-name">First name</label>
+                <input class="form-input" type="text" id="first-name" name="First Name" placeholder="Jane" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="last-name">Last name</label>
+                <input class="form-input" type="text" id="last-name" name="Last Name" placeholder="Smith" required />
+              </div>
             </div>
+
+            <!-- Email -->
             <div class="form-field">
-              <label class="form-label" for="last-name">Last name</label>
-              <input class="form-input" type="text" id="last-name" name="last_name" placeholder="Your last name" required />
+              <label class="form-label" for="email">Email address</label>
+              <input class="form-input" type="email" id="email" name="Email" placeholder="you@example.com" required />
+            </div>
+
+            <!-- Subject -->
+            <div class="form-field">
+              <label class="form-label" for="subject">Subject</label>
+              <input class="form-input" type="text" id="subject" name="Subject" placeholder="e.g. Bulk order inquiry" required />
+            </div>
+
+            <!-- Message -->
+            <div class="form-field">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="Message" placeholder="Tell us how we can help…" required></textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-submit-row">
+              <button class="form-submit-btn" type="submit" id="submit-btn">Send Message</button>
+              <div class="form-success" id="form-success">✓ Message sent! We'll get back to you shortly.</div>
+            </div>
+          </form>
+        </div>
+
+        <!-- RIGHT: Info card -->
+        <div class="info-card">
+          <!-- Email -->
+          <div class="info-item">
+            <div class="info-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 6L12 13 2 6" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <a href="mailto:info@asg-global.ba" class="info-label">info@asg-global.ba</a>
+          </div>
+
+          <!-- Address / Maps -->
+          <div class="info-item">
+            <div class="info-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="10" r="3" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <a href="https://maps.google.com/?q=Akademika+Jovana+Surutke+19,+Banja+Luka,+Bosnia+and+Herzegovina" target="_blank" rel="noopener noreferrer" class="info-link-green">See on maps</a>
+          </div>
+        </div>
+
+      </div><!-- /contact-body -->
+    </div><!-- /frame-12 -->
+
+    <!-- ── Footer ───────────────────────────────────────── -->
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="footer-nav-group">
+          <div class="footer-col">
+            <div class="footer-heading">Navigation</div>
+            <div class="footer-list">
+              <a href="index.html" class="footer-link">Home</a>
+              <a href="product.html" class="footer-link">Products</a>
+              <a href="catalogue.html" class="footer-link">Catalogue</a>
+              <a href="contact.html" class="footer-link">Contact Us</a>
             </div>
           </div>
-
-          <div class="form-field">
-            <label class="form-label" for="email">Email address</label>
-            <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required />
-          </div>
-
-          <div class="form-field">
-            <label class="form-label" for="subject">Subject</label>
-            <input class="form-input" type="text" id="subject" name="subject" placeholder="What's this about?" required />
-          </div>
-
-          <div class="form-field">
-            <label class="form-label" for="message">Message</label>
-            <textarea class="form-textarea" id="message" name="message" placeholder="Write your message here…" required></textarea>
-          </div>
-
-          <div class="form-submit-wrap">
-            <button type="submit" class="cta-btn bg-green">
-              <div class="btn-shadow"></div>
-              <div class="btn-face"><span>Send Message</span></div>
-            </button>
-            <span class="form-note">We usually reply within 1–2 business days.</span>
-          </div>
-        </div>
-      </form>
-    </div>
-
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-main">
-      <div class="footer-nav-group">
-        <div class="footer-col">
-          <div class="footer-heading">Navigation</div>
-          <div class="footer-list">
-            <a href="index.html" class="footer-link">Home</a>
-            <a href="product.html" class="footer-link">Products</a>
-            <a href="catalogue.html" class="footer-link">Catalogue</a>
-            <a href="contact.html" class="footer-link">Contact Us</a>
-          </div>
-        </div>
-        <div class="footer-col">
-          <div class="footer-heading">Address</div>
-          <div class="footer-address-list">
-            <span class="footer-address-item">Akademika Jovana Surutke 19, lokal 1</span>
-            <span class="footer-address-item">78000 Banja Luka</span>
-            <span class="footer-address-item">Bosnia and Herzegovina</span>
+          <div class="footer-col">
+            <div class="footer-heading">Address</div>
+            <div class="footer-address-list">
+              <span class="footer-address-item">Akademika Jovana Surutke 19, lokal 1</span>
+              <span class="footer-address-item">78000 Banja Luka</span>
+              <span class="footer-address-item">Bosnia and Herzegovina</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="footer-follow">
-      <div class="footer-heading">Follow Us</div>
-      <div style="display:flex;gap:16px;align-items:center;">
-        <a href="#" aria-label="Facebook" style="opacity:0.6;display:flex;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a href="https://www.instagram.com/pote.pets/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="opacity:0.6;display:flex;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 11.37C16.1234 12.2021 15.9813 13.052 15.5938 13.7988C15.2063 14.5456 14.5931 15.1512 13.8416 15.5295C13.0901 15.9077 12.2384 16.0394 11.4078 15.9057C10.5771 15.7721 9.80977 15.3799 9.21485 14.785C8.61993 14.1901 8.22774 13.4227 8.09408 12.592C7.96042 11.7614 8.09208 10.9097 8.47034 10.1582C8.8486 9.40667 9.45419 8.79355 10.201 8.40605C10.9478 8.01856 11.7977 7.8764 12.63 7.99981C13.4789 8.1257 14.2649 8.52128 14.8717 9.12812C15.4785 9.73496 15.8741 10.5209 16 11.37Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M17.5 6.5H17.51" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
+      <div class="footer-follow">
+        <div class="footer-heading">Follow Us</div>
+        <div class="footer-social-icons">
+          <a href="#" aria-label="Facebook" style="opacity:0.6;display:flex;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/pote.pets/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="opacity:0.6;display:flex;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17 2H7C4.23858 2 2 4.23858 2 7V17C2 19.7614 4.23858 22 7 22H17C19.7614 22 22 19.7614 22 17V7C22 4.23858 19.7614 2 17 2Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 11.37C16.1234 12.2021 15.9813 13.052 15.5938 13.7988C15.2063 14.5456 14.5931 15.1512 13.8416 15.5295C13.0901 15.9077 12.2384 16.0394 11.4078 15.9057C10.5771 15.7721 9.80977 15.3799 9.21485 14.785C8.61993 14.1901 8.22774 13.4227 8.09408 12.592C7.96042 11.7614 8.09208 10.9097 8.47034 10.1582C8.8486 9.40667 9.45419 8.79355 10.201 8.40605C10.9478 8.01856 11.7977 7.8764 12.63 7.99981C13.4789 8.1257 14.2649 8.52128 14.8717 9.12812C15.4785 9.73496 15.8741 10.5209 16 11.37Z" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.5 6.5H17.51" stroke="#E6DDD8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
       </div>
-    </div>
-    <span class="footer-copyright">© 2026 Pote. All rights reserved.</span>
-  </footer>
+      <span class="footer-copyright">© 2026 Pote. All rights reserved.</span>
+    </footer>
 
-</div>
+  </div><!-- /content-section -->
+</div><!-- /page -->
 
 <script>
-  // Hamburger
+  /* ── Form submission ──────────────────────────────────── */
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    fetch('https://formsubmit.co/ajax/info@asg-global.ba', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(this)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      document.getElementById('form-success').classList.add('show');
+      btn.style.display = 'none';
+      document.getElementById('contact-form').reset();
+    })
+    .catch(function() {
+      btn.textContent = 'Send Message';
+      btn.disabled = false;
+      alert('Something went wrong. Please email us directly at info@asg-global.ba');
+    });
+  });
+
+  /* ── Hamburger ────────────────────────────────────────── */
   var navToggle = document.getElementById('nav-toggle');
   var navMenu   = document.getElementById('nav-menu');
   navToggle.addEventListener('click', function() {
@@ -631,35 +690,6 @@
       navMenu.classList.remove('open');
     }
   });
-
-  function handleSubmit(e) {
-    // Let formsubmit handle the real POST, but show a local success state
-    // when JS is available — if formsubmit redirects, the banner won't show,
-    // which is fine; the redirect page will confirm delivery.
-    // For a cleaner UX without redirect, use the ajax approach below:
-    e.preventDefault();
-    var form = document.getElementById('contact-form');
-    var data = new FormData(form);
-
-    fetch('https://formsubmit.co/ajax/info@asg-global.ba', {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    })
-    .then(function(res) { return res.json(); })
-    .then(function(json) {
-      if (json.success === 'true' || json.success === true) {
-        form.reset();
-        document.getElementById('success-banner').classList.add('show');
-        form.style.display = 'none';
-      }
-    })
-    .catch(function() {
-      // Fallback: submit normally so the email still goes through
-      form.removeEventListener('submit', handleSubmit);
-      form.submit();
-    });
-  }
 </script>
 </body>
 </html>
