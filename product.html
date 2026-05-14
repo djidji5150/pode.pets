@@ -1408,9 +1408,9 @@
           </div>
 
           <!-- CTA button -->
-          <a href="#" class="inquiry-btn">
+          <button class="inquiry-btn" onclick="openInquiryModal()">
             <span>Send an inquiry</span>
-          </a>
+          </button>
 
           <!-- Delivery info -->
           <div class="delivery-info">
@@ -1570,6 +1570,58 @@
 
   </div><!-- /content-section -->
 </div><!-- /page -->
+
+<!-- ── Send Inquiry modal ────────────────────────────────── -->
+<div class="modal-backdrop" id="inquiry-modal" onclick="closeInquiryModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Send an Inquiry</span>
+      <div class="modal-close" onclick="closeInquiryModalBtn()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L13 13M13 1L1 13" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <form id="inquiry-form" action="https://formsubmit.co/info@asg-global.ba" method="POST">
+      <!-- FormSubmit config -->
+      <input type="hidden" name="_subject" value="New Product Inquiry – Pote" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_next" value="" id="inquiry-next" />
+      <input type="hidden" name="Product" id="inquiry-product-field" value="Collapsible Dog Crate" />
+      <input type="hidden" name="Size" id="inquiry-size-field" value="" />
+
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="modal-field">
+          <span class="modal-label">Your name <span style="color:#c00">*</span></span>
+          <input class="modal-input" type="text" name="Name" placeholder="e.g. Jane Smith" required />
+        </div>
+
+        <div class="modal-field">
+          <span class="modal-label">Email address <span style="color:#c00">*</span></span>
+          <input class="modal-input" type="email" name="Email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="modal-field">
+          <span class="modal-label">Phone number <span style="opacity:0.5;font-weight:400;">(optional)</span></span>
+          <input class="modal-input" type="tel" name="Phone" placeholder="+1 234 567 890" />
+        </div>
+
+        <div class="modal-field">
+          <span class="modal-label">Message <span style="color:#c00">*</span></span>
+          <textarea class="modal-textarea" name="Message" placeholder="Tell us what you need – quantity, shipping destination, custom options, etc." required></textarea>
+        </div>
+
+        <div id="inquiry-success" style="display:none;padding:14px 18px;background:#A0CE7A;border-radius:12px;font-weight:600;font-size:15px;color:#0B3A43;">
+          ✓ Your inquiry has been sent! We'll get back to you shortly.
+        </div>
+
+        <button type="submit" class="modal-submit" id="inquiry-submit-btn">Send Inquiry</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- ── Write a Review modal ──────────────────────────────── -->
 <div class="modal-backdrop" id="review-modal" onclick="closeReviewModal(event)">
@@ -1891,6 +1943,55 @@
       }
     });
   }
+
+  /* ── Inquiry modal ──────────────────────────────────── */
+  function openInquiryModal() {
+    // Pre-fill the hidden size field with whatever is currently selected
+    var sizeText = document.getElementById('dropdown-main-text').textContent;
+    document.getElementById('inquiry-size-field').value = sizeText;
+    // Set the _next redirect to the current page
+    document.getElementById('inquiry-next').value = window.location.href;
+    // Reset form state
+    document.getElementById('inquiry-success').style.display = 'none';
+    document.getElementById('inquiry-submit-btn').style.display = 'flex';
+    document.getElementById('inquiry-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeInquiryModalBtn() {
+    document.getElementById('inquiry-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeInquiryModal(e) {
+    if (e.target === document.getElementById('inquiry-modal')) closeInquiryModalBtn();
+  }
+
+  document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var btn  = document.getElementById('inquiry-submit-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    var data = new FormData(form);
+    fetch('https://formsubmit.co/ajax/info@asg-global.ba', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: data
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      document.getElementById('inquiry-success').style.display = 'block';
+      btn.style.display = 'none';
+      form.reset();
+    })
+    .catch(function() {
+      btn.textContent = 'Send Inquiry';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or email us at info@asg-global.ba');
+    });
+  });
 
   /* ── Init ────────────────────────────────────────────── */
   renderReviews();
