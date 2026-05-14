@@ -704,6 +704,10 @@
       color: #0B3A43;
     }
 
+    .sort-dropdown-wrap {
+      position: relative;
+    }
+
     .sort-dropdown {
       display: flex;
       flex-direction: row;
@@ -715,6 +719,14 @@
       border: 1px solid #0B3A43;
       border-radius: 8px;
       cursor: pointer;
+      user-select: none;
+      background: #fff;
+      transition: border-radius 0.15s;
+    }
+
+    .sort-dropdown.open {
+      border-radius: 8px 8px 0 0;
+      border-bottom-color: transparent;
     }
 
     .sort-dropdown span {
@@ -722,6 +734,42 @@
       font-size: 18px;
       line-height: 140%;
       color: #0B3A43;
+    }
+
+    .sort-options {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #0B3A43;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    .sort-options.open { display: block; }
+
+    .sort-option {
+      padding: 12px 16px;
+      font-weight: 500;
+      font-size: 16px;
+      color: #0B3A43;
+      cursor: pointer;
+      border-top: 1px solid rgba(11, 58, 67, 0.1);
+      transition: background 0.15s;
+    }
+    .sort-option:first-child { border-top: none; }
+    .sort-option:hover, .sort-option.active { background: rgba(11, 58, 67, 0.06); }
+
+    .no-reviews {
+      padding: 32px 0;
+      font-weight: 400;
+      font-size: 16px;
+      color: rgba(11, 58, 67, 0.5);
+      text-align: center;
     }
 
     /* Review row */
@@ -1430,90 +1478,34 @@
         <div class="section-padded">
           <div class="white-card">
             <!-- Reviews header -->
-            <div style="display:flex; flex-direction:row; justify-content:space-between; align-items:center; width:640px;">
+            <div style="display:flex; flex-direction:row; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
               <div style="display:flex; flex-direction:column; gap:8px;">
-                <span class="reviews-title">Reviews</span>
+                <span class="reviews-title" id="reviews-title-count">Reviews (7)</span>
                 <div class="rating-breakdown">
                   <div class="rating-bar">
                     <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num">5</span>
-                  </div>
-                  <div class="rating-bar">
-                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num">4</span>
-                  </div>
-                  <div class="rating-bar">
-                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num">3</span>
-                  </div>
-                  <div class="rating-bar">
-                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num">2</span>
-                  </div>
-                  <div class="rating-bar">
-                    <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num">1</span>
+                    <span class="rating-bar-num" id="avg-rating">4.7</span>
                   </div>
                 </div>
               </div>
-              <div class="sort-dropdown">
-                <span>Newest</span>
-                <div class="dropdown-arrow">
-                  <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 0.5L4 3.5L7 0.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+              <div class="sort-dropdown-wrap">
+                <div class="sort-dropdown" id="sort-dropdown" onclick="toggleSortDropdown()">
+                  <span id="sort-label">Newest</span>
+                  <div class="dropdown-arrow" id="sort-arrow">
+                    <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 0.5L4 3.5L7 0.5" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="sort-options" id="sort-options">
+                  <div class="sort-option active" onclick="setSortOrder('newest', this)">Newest</div>
+                  <div class="sort-option" onclick="setSortOrder('oldest', this)">Oldest</div>
                 </div>
               </div>
             </div>
 
-            <!-- Review rows -->
-            <div style="display:flex; flex-direction:column; align-self:stretch;">
-              <!-- Review 1 -->
-              <div class="review-row">
-                <div class="review-inner">
-                  <!-- Reviewer left column -->
-                  <div class="reviewer-info">
-                    <div style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; background:#E6DDD8; overflow:hidden;">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="8" cy="6" r="3" stroke="#0B3A43" stroke-width="1.5"/>
-                        <path d="M2 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round"/>
-                      </svg>
-                    </div>
-                    <span class="reviewer-name">Bobby Flay</span>
-                    <!-- Star rating for reviewer -->
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M7.65335 2.33268C7.68155 2.2639 7.72957 2.20506 7.7913 2.16365C7.85303 2.12224 7.92568 2.10013 8.00002 2.10013C8.07435 2.10013 8.14701 2.12224 8.20874 2.16365C8.27047 2.20506 8.31849 2.2639 8.34669 2.33268L9.76335 5.74001C9.78987 5.80377 9.83346 5.85897 9.88933 5.89955C9.9452 5.94013 10.0112 5.96451 10.08 5.97001L13.7587 6.26468C14.0914 6.29134 14.226 6.70668 13.9727 6.92334L11.17 9.32468C11.1177 9.36947 11.0786 9.42782 11.0572 9.49331C11.0358 9.55881 11.0329 9.62894 11.0487 9.69601L11.9054 13.286C11.9226 13.358 11.9181 13.4335 11.8924 13.503C11.8667 13.5725 11.821 13.6328 11.7611 13.6763C11.7012 13.7198 11.6297 13.7446 11.5557 13.7475C11.4817 13.7504 11.4085 13.7313 11.3454 13.6927L8.19535 11.7693C8.13651 11.7335 8.06893 11.7145 8.00002 11.7145C7.93111 11.7145 7.86353 11.7335 7.80469 11.7693L4.65469 13.6933C4.59152 13.732 4.51832 13.7511 4.44432 13.7482C4.37033 13.7452 4.29885 13.7205 4.23893 13.677C4.17901 13.6334 4.13333 13.5731 4.10765 13.5037C4.08198 13.4342 4.07747 13.3587 4.09469 13.2867L4.95135 9.69601C4.96724 9.62894 4.96432 9.55879 4.94291 9.49328C4.92151 9.42776 4.88244 9.36942 4.83002 9.32468L2.02735 6.92334C1.97123 6.87509 1.93063 6.81131 1.91065 6.74003C1.89068 6.66876 1.89222 6.59317 1.9151 6.52278C1.93797 6.45238 1.98114 6.39031 2.0392 6.34439C2.09725 6.29847 2.16758 6.27073 2.24135 6.26468L5.92002 5.97001C5.98885 5.96451 6.05483 5.94013 6.1107 5.89955C6.16657 5.85897 6.21017 5.80377 6.23669 5.74001L7.65335 2.33268Z" fill="#FAC832" stroke="#FAC832" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </div>
-                  <!-- Review right column -->
-                  <div class="review-content">
-                    <div class="review-meta">
-                      <span class="review-title">Great Design</span>
-                      <span class="review-date">1. Februar 2026</span>
-                    </div>
-                    <p class="review-text">Really happy with this purchase. The cage is spacious and well-built, and the design looks great in the room.</p>
-                  </div>
-                </div>
-                <!-- Helpful -->
-                <div class="helpful-row">
-                  <span class="helpful-label">Was this helpful?</span>
-                  <div style="display:flex; align-items:center; gap:16px;">
-                    <div class="helpful-btn">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.32;">
-                        <path d="M10.667 6.667V3.333a1.333 1.333 0 0 0-1.334-1.333L6 6.667v6.666h4.587A1.333 1.333 0 0 0 11.92 12.2l.913-4a1.333 1.333 0 0 0-1.333-1.533h-0.833zM6 6.667H4a1.333 1.333 0 0 0-1.333 1.333v4a1.333 1.333 0 0 0 1.333 1.333H6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <span class="helpful-count">0</span>
-                    </div>
-                    <div class="helpful-btn">
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.32;">
-                        <path d="M5.333 9.333v3.334a1.333 1.333 0 0 0 1.334 1.333L10 9.333V2.667H5.413A1.333 1.333 0 0 0 4.08 3.8l-.913 4a1.333 1.333 0 0 0 1.333 1.533h0.833zM10 9.333h2a1.333 1.333 0 0 0 1.333-1.333v-4A1.333 1.333 0 0 0 12 2.667h-2" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      <span class="helpful-count">0</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <!-- Review rows – rendered by JS -->
+            <div id="reviews-container" style="display:flex; flex-direction:column; align-self:stretch;"></div>
 
             <!-- Reviews footer -->
             <div class="reviews-footer">
@@ -1633,29 +1625,25 @@
 </div>
 
 <script>
-  // Thumbnail click interaction
+  /* ── Thumbnails ──────────────────────────────────────── */
   document.querySelectorAll('.thumb-wrap').forEach(function(thumb) {
     thumb.addEventListener('click', function() {
-      document.querySelectorAll('.thumb-wrap').forEach(function(t) {
-        t.classList.remove('selected');
-      });
+      document.querySelectorAll('.thumb-wrap').forEach(function(t) { t.classList.remove('selected'); });
       this.classList.add('selected');
       document.querySelector('.main-image').src = this.querySelector('img').src;
     });
   });
 
-  // Color circle selection
+  /* ── Color circles ───────────────────────────────────── */
   document.querySelectorAll('.color-circle').forEach(function(circle) {
     circle.addEventListener('click', function() {
-      document.querySelectorAll('.color-circle').forEach(function(c) {
-        c.classList.remove('selected');
-      });
+      document.querySelectorAll('.color-circle').forEach(function(c) { c.classList.remove('selected'); });
       this.classList.add('selected');
-      document.querySelector('#size-label-value').previousElementSibling.previousElementSibling.nextElementSibling.nextElementSibling.textContent = this.getAttribute('title');
+      document.getElementById('size-label-value').closest('.selector-label-row').querySelector('.selector-value').textContent = this.getAttribute('title');
     });
   });
 
-  // Size dropdown
+  /* ── Size dropdown ───────────────────────────────────── */
   function toggleSizeDropdown() {
     var dropdown = document.getElementById('size-dropdown');
     var options  = document.getElementById('size-options');
@@ -1666,30 +1654,162 @@
   }
 
   function selectSize(el) {
-    // Mark selected
-    document.querySelectorAll('.dropdown-option').forEach(function(o) {
-      o.classList.remove('selected');
-    });
+    document.querySelectorAll('.dropdown-option').forEach(function(o) { o.classList.remove('selected'); });
     el.classList.add('selected');
-
-    // Update visible text
     document.getElementById('dropdown-main-text').textContent = el.dataset.main;
     document.getElementById('dropdown-sub-text').textContent  = el.dataset.sub;
     document.getElementById('size-label-value').textContent   = el.dataset.label;
-
-    // Close
     document.getElementById('size-options').classList.remove('open');
     document.getElementById('size-dropdown').classList.remove('open');
     document.getElementById('dropdown-arrow-icon').classList.remove('open');
   }
 
-  // Accordion toggle
+  /* ── Accordion ───────────────────────────────────────── */
   function toggleAccordion(header) {
-    var item = header.closest('.accordion-item');
-    item.classList.toggle('open');
+    header.closest('.accordion-item').classList.toggle('open');
   }
 
-  // Write a Review modal
+  /* ── Reviews data ────────────────────────────────────── */
+  var reviews = [
+    {
+      name: 'Bobby Flay', rating: 5,
+      title: 'Great Design',
+      text: 'Really happy with this purchase. The cage is spacious and well-built, and the design looks great in the room.',
+      date: new Date('2026-02-01'), helpful: 3, unhelpful: 0
+    },
+    {
+      name: 'Sarah M.', rating: 5,
+      title: "Best cage we've ever had",
+      text: "Our German Shepherd loves his new crate! The aluminum construction is incredibly sturdy and it folds flat when not in use. Worth every penny.",
+      date: new Date('2026-03-15'), helpful: 12, unhelpful: 1
+    },
+    {
+      name: 'James K.', rating: 4,
+      title: 'Solid quality, slightly heavy',
+      text: "Very well made and feels premium. Only minor downside is the weight – it's not super light, but that's the trade-off for aluminum. Overall very happy.",
+      date: new Date('2026-01-10'), helpful: 7, unhelpful: 0
+    },
+    {
+      name: 'Ana T.', rating: 5,
+      title: 'My cat actually uses it willingly!',
+      text: 'I never thought I\'d say this, but my cat walks into the crate on her own. The ventilation is excellent and it cleans easily. Absolutely love it.',
+      date: new Date('2026-04-02'), helpful: 18, unhelpful: 2
+    },
+    {
+      name: 'Marco D.', rating: 3,
+      title: 'Good but assembly takes time',
+      text: 'The crate itself is fantastic quality once assembled. However the assembly guide could be clearer. Took me about 45 minutes to figure it out. Product 4/5, instructions 2/5.',
+      date: new Date('2025-12-20'), helpful: 4, unhelpful: 1
+    },
+    {
+      name: 'Petra L.', rating: 5,
+      title: 'Perfect for travel',
+      text: 'We use this for road trips and flying. Airline approved and the security latch gives real peace of mind. Our dog Milo is comfortable and calm during travel now.',
+      date: new Date('2026-04-18'), helpful: 22, unhelpful: 0
+    },
+    {
+      name: 'Tom W.', rating: 4,
+      title: 'Great cage for the price',
+      text: 'Quality is top notch. The collapsible design is a game changer for storage. Wish it came in more color options but the gray works fine.',
+      date: new Date('2026-01-25'), helpful: 9, unhelpful: 1
+    }
+  ];
+
+  var sortOrder = 'newest';
+
+  function formatDate(date) {
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function starsSVG(rating) {
+    var html = '<div style="display:flex;gap:3px;">';
+    for (var i = 1; i <= 5; i++) {
+      var color = i <= rating ? '#FAC832' : 'rgba(11,58,67,0.15)';
+      html += '<svg width="14" height="14" viewBox="0 0 16 16" fill="' + color + '" xmlns="http://www.w3.org/2000/svg"><path d="M7.65335 2.33268C7.68155 2.2639 7.72957 2.20506 7.7913 2.16365C7.85303 2.12224 7.92568 2.10013 8.00002 2.10013C8.07435 2.10013 8.14701 2.12224 8.20874 2.16365C8.27047 2.20506 8.31849 2.2639 8.34669 2.33268L9.76335 5.74001C9.78987 5.80377 9.83346 5.85897 9.88933 5.89955C9.9452 5.94013 10.0112 5.96451 10.08 5.97001L13.7587 6.26468C14.0914 6.29134 14.226 6.70668 13.9727 6.92334L11.17 9.32468C11.1177 9.36947 11.0786 9.42782 11.0572 9.49331C11.0358 9.55881 11.0329 9.62894 11.0487 9.69601L11.9054 13.286C11.9226 13.358 11.9181 13.4335 11.8924 13.503C11.8667 13.5725 11.821 13.6328 11.7611 13.6763C11.7012 13.7198 11.6297 13.7446 11.5557 13.7475C11.4817 13.7504 11.4085 13.7313 11.3454 13.6927L8.19535 11.7693C8.13651 11.7335 8.06893 11.7145 8.00002 11.7145C7.93111 11.7145 7.86353 11.7335 7.80469 11.7693L4.65469 13.6933C4.59152 13.732 4.51832 13.7511 4.44432 13.7482C4.37033 13.7452 4.29885 13.7205 4.23893 13.677C4.17901 13.6334 4.13333 13.5731 4.10765 13.5037C4.08198 13.4342 4.07747 13.3587 4.09469 13.2867L4.95135 9.69601C4.96724 9.62894 4.96432 9.55879 4.94291 9.49328C4.92151 9.42776 4.88244 9.36942 4.83002 9.32468L2.02735 6.92334C1.97123 6.87509 1.93063 6.81131 1.91065 6.74003C1.89068 6.66876 1.89222 6.59317 1.9151 6.52278C1.93797 6.45238 1.98114 6.39031 2.0392 6.34439C2.09725 6.29847 2.16758 6.27073 2.24135 6.26468L5.92002 5.97001C5.98885 5.96451 6.05483 5.94013 6.1107 5.89955C6.16657 5.85897 6.21017 5.80377 6.23669 5.74001L7.65335 2.33268Z"/></svg>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function updateReviewStats() {
+    var total = reviews.length;
+    var avg = reviews.reduce(function(s, r) { return s + r.rating; }, 0) / total;
+    document.getElementById('reviews-title-count').textContent = 'Reviews (' + total + ')';
+    document.getElementById('avg-rating').textContent = avg.toFixed(1);
+  }
+
+  function renderReviews() {
+    var sorted = reviews.slice().sort(function(a, b) {
+      return sortOrder === 'newest' ? b.date - a.date : a.date - b.date;
+    });
+    var container = document.getElementById('reviews-container');
+    if (sorted.length === 0) {
+      container.innerHTML = '<div class="no-reviews">No reviews yet. Be the first to write one!</div>';
+      return;
+    }
+    container.innerHTML = sorted.map(function(r, idx) {
+      var initials = r.name.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+      return '<div class="review-row">' +
+        '<div class="review-inner">' +
+          '<div class="reviewer-info">' +
+            '<div style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#0B3A43;color:#E6DDD8;font-weight:700;font-size:13px;flex-shrink:0;">' + initials + '</div>' +
+            '<span class="reviewer-name">' + r.name + '</span>' +
+            starsSVG(r.rating) +
+          '</div>' +
+          '<div class="review-content">' +
+            '<div class="review-meta">' +
+              '<span class="review-title">' + r.title + '</span>' +
+              '<span class="review-date">' + formatDate(r.date) + '</span>' +
+            '</div>' +
+            '<p class="review-text">' + r.text + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="helpful-row">' +
+          '<span class="helpful-label">Was this helpful?</span>' +
+          '<div style="display:flex;align-items:center;gap:16px;">' +
+            '<div class="helpful-btn" onclick="voteHelpful(' + idx + ', 1)">' +
+              '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.5;"><path d="M10.667 6.667V3.333a1.333 1.333 0 0 0-1.334-1.333L6 6.667v6.666h4.587A1.333 1.333 0 0 0 11.92 12.2l.913-4a1.333 1.333 0 0 0-1.333-1.533h-0.833zM6 6.667H4a1.333 1.333 0 0 0-1.333 1.333v4a1.333 1.333 0 0 0 1.333 1.333H6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '<span class="helpful-count">' + r.helpful + '</span>' +
+            '</div>' +
+            '<div class="helpful-btn" onclick="voteHelpful(' + idx + ', -1)">' +
+              '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.5;"><path d="M5.333 9.333v3.334a1.333 1.333 0 0 0 1.334 1.333L10 9.333V2.667H5.413A1.333 1.333 0 0 0 4.08 3.8l-.913 4a1.333 1.333 0 0 0 1.333 1.533h0.833zM10 9.333h2a1.333 1.333 0 0 0 1.333-1.333v-4A1.333 1.333 0 0 0 12 2.667h-2" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '<span class="helpful-count">' + r.unhelpful + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    updateReviewStats();
+  }
+
+  function voteHelpful(idx, dir) {
+    if (dir === 1) reviews[idx].helpful++;
+    else reviews[idx].unhelpful++;
+    renderReviews();
+  }
+
+  /* ── Sort dropdown ───────────────────────────────────── */
+  function toggleSortDropdown() {
+    var dd = document.getElementById('sort-dropdown');
+    var opts = document.getElementById('sort-options');
+    var arrow = document.getElementById('sort-arrow');
+    var open = opts.classList.toggle('open');
+    dd.classList.toggle('open', open);
+    arrow.classList.toggle('open', open);
+  }
+
+  function setSortOrder(order, el) {
+    sortOrder = order;
+    document.getElementById('sort-label').textContent = order === 'newest' ? 'Newest' : 'Oldest';
+    document.querySelectorAll('.sort-option').forEach(function(o) { o.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('sort-options').classList.remove('open');
+    document.getElementById('sort-dropdown').classList.remove('open');
+    document.getElementById('sort-arrow').classList.remove('open');
+    renderReviews();
+  }
+
+  /* ── Write a Review modal ────────────────────────────── */
   function openReviewModal() {
     document.getElementById('review-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1701,13 +1821,11 @@
   }
 
   function closeReviewModal(e) {
-    if (e.target === document.getElementById('review-modal')) {
-      closeReviewModalBtn();
-    }
+    if (e.target === document.getElementById('review-modal')) closeReviewModalBtn();
   }
 
-  // Star rating
   var currentRating = 0;
+
   function setRating(value) {
     currentRating = value;
     document.querySelectorAll('.star-picker .star').forEach(function(star) {
@@ -1716,30 +1834,49 @@
   }
 
   function submitReview() {
-    var name  = document.querySelector('.modal-input').value.trim();
-    var title = document.querySelectorAll('.modal-input')[1].value.trim();
-    var body  = document.querySelector('.modal-textarea').value.trim();
-    if (!currentRating || !name || !title || !body) {
+    var nameEl  = document.querySelectorAll('.modal-input')[0];
+    var titleEl = document.querySelectorAll('.modal-input')[1];
+    var bodyEl  = document.querySelector('.modal-textarea');
+    var name  = nameEl.value.trim();
+    var title = titleEl.value.trim();
+    var text  = bodyEl.value.trim();
+
+    if (!currentRating || !name || !title || !text) {
       alert('Please fill in all fields and select a rating.');
       return;
     }
+
+    reviews.unshift({ name: name, rating: currentRating, title: title, text: text, date: new Date(), helpful: 0, unhelpful: 0 });
+
     closeReviewModalBtn();
-    // Reset form
-    document.querySelectorAll('.modal-input').forEach(function(i) { i.value = ''; });
-    document.querySelector('.modal-textarea').value = '';
+    nameEl.value = ''; titleEl.value = ''; bodyEl.value = '';
     document.querySelectorAll('.star').forEach(function(s) { s.classList.remove('active'); });
     currentRating = 0;
+
+    sortOrder = 'newest';
+    document.getElementById('sort-label').textContent = 'Newest';
+    document.querySelectorAll('.sort-option').forEach(function(o, i) { o.classList.toggle('active', i === 0); });
+
+    renderReviews();
+
+    document.getElementById('reviews-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Close dropdown when clicking outside
+  /* ── Close dropdowns on outside click ───────────────── */
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.size-dropdown-wrap')) {
       document.getElementById('size-options').classList.remove('open');
       document.getElementById('size-dropdown').classList.remove('open');
       document.getElementById('dropdown-arrow-icon').classList.remove('open');
     }
+    if (!e.target.closest('.sort-dropdown-wrap')) {
+      document.getElementById('sort-options').classList.remove('open');
+      document.getElementById('sort-dropdown').classList.remove('open');
+      document.getElementById('sort-arrow').classList.remove('open');
+    }
   });
-  // Hamburger menu
+
+  /* ── Hamburger ───────────────────────────────────────── */
   var navToggle = document.getElementById('nav-toggle');
   var navMenu   = document.getElementById('nav-menu');
   if (navToggle) {
@@ -1754,6 +1891,9 @@
       }
     });
   }
+
+  /* ── Init ────────────────────────────────────────────── */
+  renderReviews();
 </script>
 </body>
 </html>
