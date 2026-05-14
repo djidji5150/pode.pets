@@ -17,7 +17,8 @@
 
     /* ─── Page ──────────────────────────────────────────── */
     .page {
-      width: 1440px;
+      max-width: 1440px;
+      width: 100%;
       margin: 0 auto;
       position: relative;
       padding: 136px 0 80px;
@@ -30,12 +31,13 @@
     .navbar {
       position: absolute;
       top: 0; left: 0;
-      width: 1440px;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 40px 80px 0;
       background: #E6DDD8;
+      z-index: 200;
     }
 
     .logo-wrap {
@@ -1006,7 +1008,7 @@
 
     /* ─── Footer ──────────────────────────────────────────── */
     .footer {
-      width: 1280px;
+      width: min(1280px, calc(100% - 160px));
       background: #0B3A43;
       border-radius: 48px;
       padding: 80px;
@@ -1085,6 +1087,109 @@
       display: flex;
       gap: 16px;
     }
+
+    /* ─── Hamburger ───────────────────────────────────────── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 201;
+    }
+    .nav-toggle span {
+      display: block; width: 26px; height: 2px;
+      background: #0B3A43; border-radius: 2px;
+      transition: transform 0.25s, opacity 0.2s;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── Tablet 768–1199px ───────────────────────────────── */
+    @media (max-width: 1199px) {
+      .page  { padding: 100px 0 60px; gap: 60px; }
+      .navbar { padding: 28px 40px 0; }
+      .nav-menu { gap: 28px; }
+      .nav-link { font-size: 17px; }
+
+      .detail-row { width: calc(100% - 80px); gap: 80px; padding: 20px 0 0; }
+      .main-image { height: 480px; }
+      .thumb { height: 100px; }
+      .thumb-wrap { height: 100px; }
+
+      .section-padded { padding: 0 40px; }
+      .white-card { padding: 48px; }
+
+      .review-row { width: 100%; }
+      .review-inner { gap: 40px; }
+      .review-content { width: auto; flex: 1; }
+      .helpful-row { width: 100%; }
+      .reviews-header { width: 100%; }
+
+      .footer { width: min(1280px, calc(100% - 80px)); padding: 60px; }
+      .footer-follow { right: 60px; top: 60px; }
+      .footer-copyright { right: 60px; bottom: 60px; }
+
+      .modal { width: 90vw; max-width: 560px; }
+    }
+
+    /* ─── Mobile < 768px ─────────────────────────────────── */
+    @media (max-width: 767px) {
+      .page { padding: 70px 0 40px; gap: 40px; overflow-x: hidden; }
+
+      .navbar { position: fixed; top: 0; left: 0; right: 0; padding: 14px 20px; box-shadow: 0 1px 0 rgba(11,58,67,0.1); }
+      .logo-wrap { width: 80px; }
+      .nav-toggle { display: flex; }
+      .nav-menu {
+        display: none;
+        position: fixed; top: 58px; left: 0; right: 0;
+        background: #E6DDD8;
+        flex-direction: column; align-items: flex-start;
+        padding: 20px 20px 28px; gap: 20px;
+        box-shadow: 0 8px 24px rgba(11,58,67,0.12); z-index: 199;
+      }
+      .nav-menu.open { display: flex; }
+      .nav-link { font-size: 18px; }
+
+      .content-section { gap: 56px; }
+      .frame-12 { gap: 48px; }
+
+      /* Product detail: stack vertically */
+      .detail-row { flex-direction: column; width: calc(100% - 40px); gap: 32px; padding: 0; }
+      .images-col { width: 100%; }
+      .main-image { height: 320px; border-radius: 28px; }
+      .thumb { height: 80px; }
+      .thumb-wrap { height: 80px; }
+
+      .info-col { width: 100%; }
+      .product-title { font-size: 24px; }
+      .product-price { font-size: 24px; }
+
+      /* Lower sections */
+      .section-padded { padding: 0 20px; }
+      .white-card { padding: 28px 24px; border-radius: 28px; }
+
+      .review-row { width: 100%; padding: 20px 0; }
+      .review-inner { flex-direction: column; gap: 16px; }
+      .review-content { width: 100%; }
+      .helpful-row { width: 100%; }
+      .reviews-header { width: 100%; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .reviews-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+      /* Footer */
+      .footer { width: calc(100% - 40px); border-radius: 28px; padding: 40px 24px 40px; margin: 0 auto; }
+      .footer-main { flex-direction: column; gap: 32px; }
+      .footer-nav-group { flex-direction: column; gap: 28px; }
+      .footer-follow { position: relative; right: auto; top: auto; margin-top: 8px; }
+      .footer-copyright { position: relative; right: auto; bottom: auto; display: block; margin-top: 20px; }
+
+      /* Modal */
+      .modal { width: calc(100vw - 32px); border-radius: 28px; padding: 32px 24px; gap: 20px; }
+      .modal-title { font-size: 24px; }
+    }
   </style>
 </head>
 <body>
@@ -1095,7 +1200,10 @@
     <div class="logo-wrap">
       <img src="images/logo.svg" alt="Pote" />
     </div>
-    <div class="nav-menu">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-menu" id="nav-menu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="product.html" class="nav-link active">Products</a>
       <a href="catalogue.html" class="nav-link">Catalogue</a>
@@ -1631,6 +1739,21 @@
       document.getElementById('dropdown-arrow-icon').classList.remove('open');
     }
   });
+  // Hamburger menu
+  var navToggle = document.getElementById('nav-toggle');
+  var navMenu   = document.getElementById('nav-menu');
+  if (navToggle) {
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('open');
+      navMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navToggle.classList.remove('open');
+        navMenu.classList.remove('open');
+      }
+    });
+  }
 </script>
 </body>
 </html>
