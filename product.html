@@ -949,25 +949,55 @@
     }
 
     .write-review-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 16px;
-      height: 64px;
+      position: relative;
+      display: inline-flex;
+      padding: 4px 8px 8px 0;
+      border-radius: 100px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: none;
+    }
+    .write-review-btn .btn-shadow {
+      position: absolute;
       background: #0B3A43;
       border: 2px solid #0B3A43;
       border-radius: 100px;
-      cursor: pointer;
-      text-decoration: none;
+      bottom: 0; left: 4px; right: 0; top: 8px;
+      transition: opacity 0.2s ease;
     }
-
-    .write-review-btn span {
+    .write-review-btn .btn-face {
+      position: relative;
+      border: 2px solid #0B3A43;
+      border-radius: 100px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #A0CE7A;
+      transition: transform 0.2s ease;
+    }
+    .write-review-btn .btn-face span {
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
       font-size: 20px;
       line-height: 100%;
-      color: #FFFFFF;
+      color: #0B3A43;
+      white-space: nowrap;
+    }
+    .write-review-btn:hover .btn-face { transform: translate(4px, 4px); }
+    .write-review-btn:hover .btn-shadow { opacity: 0; }
+
+    .see-more-link {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      color: #0B3A43;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      background: none;
+      border: none;
     }
 
     /* ─── Write a Review modal ───────────────────────────── */
@@ -1570,12 +1600,10 @@
 
             <!-- Reviews footer -->
             <div class="reviews-footer">
-              <a href="#" class="cta-btn bg-green">
-                <div class="btn-shadow"></div>
-                <div class="btn-face"><span>See more</span></div>
-              </a>
+              <a href="#" class="see-more-link">See more</a>
               <button class="write-review-btn" onclick="openReviewModal()">
-                <span>Write a Review</span>
+                <div class="btn-shadow"></div>
+                <div class="btn-face"><span>Write a Review</span></div>
               </button>
             </div>
           </div>
