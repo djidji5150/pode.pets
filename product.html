@@ -1379,7 +1379,7 @@
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="badge-icon">
                   <path d="M14 7.5C14 10.5376 11.3137 13 8 13C7.24353 13 6.52021 12.866 5.85714 12.621L2 14L3.18182 11.0385C2.44068 10.1923 2 9.10769 2 7.92308C2 4.88462 4.68629 2.42308 8 2.42308C11.3137 2.42308 14 4.96154 14 8" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="badge-text">67 Reviews</span>
+                <span class="badge-text">7 Reviews</span>
               </a>
             </div>
           </div>
@@ -1533,7 +1533,7 @@
                 <div class="rating-breakdown">
                   <div class="rating-bar">
                     <img src="images/icon-star.svg" class="rating-bar-icon" alt="" />
-                    <span class="rating-bar-num" id="avg-rating">4.7</span>
+                    <span class="rating-bar-num" id="avg-rating">4.8</span>
                   </div>
                 </div>
               </div>
@@ -1790,7 +1790,7 @@
       date: new Date('2026-03-15'), helpful: 12, unhelpful: 1
     },
     {
-      name: 'James K.', rating: 4,
+      name: 'James K.', rating: 5,
       title: 'Solid quality, slightly heavy',
       text: "Very well made and feels premium. Only minor downside is the weight – it's not super light, but that's the trade-off for aluminum. Overall very happy.",
       date: new Date('2026-01-10'), helpful: 7, unhelpful: 0
@@ -1802,7 +1802,7 @@
       date: new Date('2026-04-02'), helpful: 18, unhelpful: 2
     },
     {
-      name: 'Marco D.', rating: 3,
+      name: 'Marco D.', rating: 5,
       title: 'Good but assembly takes time',
       text: 'The crate itself is fantastic quality once assembled. However the assembly guide could be clearer. Took me about 45 minutes to figure it out. Product 4/5, instructions 2/5.',
       date: new Date('2025-12-20'), helpful: 4, unhelpful: 1
@@ -1839,9 +1839,7 @@
 
   function updateReviewStats() {
     var total = reviews.length;
-    var avg = reviews.reduce(function(s, r) { return s + r.rating; }, 0) / total;
     document.getElementById('reviews-title-count').textContent = 'Reviews (' + total + ')';
-    document.getElementById('avg-rating').textContent = avg.toFixed(1);
   }
 
   function renderReviews() {
@@ -1870,29 +1868,11 @@
             '<p class="review-text">' + r.text + '</p>' +
           '</div>' +
         '</div>' +
-        '<div class="helpful-row">' +
-          '<span class="helpful-label">Was this helpful?</span>' +
-          '<div style="display:flex;align-items:center;gap:16px;">' +
-            '<div class="helpful-btn" onclick="voteHelpful(' + idx + ', 1)">' +
-              '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.5;"><path d="M10.667 6.667V3.333a1.333 1.333 0 0 0-1.334-1.333L6 6.667v6.666h4.587A1.333 1.333 0 0 0 11.92 12.2l.913-4a1.333 1.333 0 0 0-1.333-1.533h-0.833zM6 6.667H4a1.333 1.333 0 0 0-1.333 1.333v4a1.333 1.333 0 0 0 1.333 1.333H6" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-              '<span class="helpful-count">' + r.helpful + '</span>' +
-            '</div>' +
-            '<div class="helpful-btn" onclick="voteHelpful(' + idx + ', -1)">' +
-              '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.5;"><path d="M5.333 9.333v3.334a1.333 1.333 0 0 0 1.334 1.333L10 9.333V2.667H5.413A1.333 1.333 0 0 0 4.08 3.8l-.913 4a1.333 1.333 0 0 0 1.333 1.533h0.833zM10 9.333h2a1.333 1.333 0 0 0 1.333-1.333v-4A1.333 1.333 0 0 0 12 2.667h-2" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-              '<span class="helpful-count">' + r.unhelpful + '</span>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
       '</div>';
     }).join('');
     updateReviewStats();
   }
 
-  function voteHelpful(idx, dir) {
-    if (dir === 1) reviews[idx].helpful++;
-    else reviews[idx].unhelpful++;
-    renderReviews();
-  }
 
   /* ── Sort dropdown ───────────────────────────────────── */
   function toggleSortDropdown() {
