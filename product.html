@@ -141,6 +141,12 @@
       position: relative;
     }
 
+    .main-image-wrap {
+      position: relative;
+      width: 100%;
+      display: block;
+    }
+
     .main-image {
       width: 100%;
       height: 680px;
@@ -149,6 +155,33 @@
       border: 1px solid transparent;
       display: block;
     }
+
+    .img-nav-arrows {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .img-nav-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(230, 221, 216, 0.12);
+      border: 1px solid rgba(230, 221, 216, 0.48);
+      border-radius: 100px;
+      cursor: pointer;
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      transition: background 0.18s ease;
+    }
+
+    .img-nav-btn:hover { background: rgba(230, 221, 216, 0.28); }
 
     .carousel-container {
       display: flex;
@@ -1216,6 +1249,8 @@
       .detail-row { flex-direction: column; width: calc(100% - 40px); gap: 32px; padding: 0; }
       .images-col { width: 100%; }
       .main-image { height: 320px; border-radius: 28px; }
+      .img-nav-arrows { bottom: 12px; right: 12px; gap: 6px; }
+      .img-nav-btn { width: 34px; height: 34px; }
       .thumb { height: 80px; }
       .thumb-wrap { height: 80px; }
 
@@ -1279,7 +1314,21 @@
 
         <!-- Left: images -->
         <div class="images-col">
-          <img class="main-image" src="images/product-main.png" alt="Collapsible Dog Crate" />
+          <div class="main-image-wrap">
+            <img class="main-image" id="main-product-image" src="images/product-main.png" alt="Collapsible Dog Crate" />
+            <div class="img-nav-arrows">
+              <button class="img-nav-btn" id="img-prev-btn" aria-label="Previous image" onclick="stepProductImage(-1)">
+                <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 1L1 6L5 11" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button class="img-nav-btn" id="img-next-btn" aria-label="Next image" onclick="stepProductImage(1)">
+                <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L5 6L1 11" stroke="#E6DDD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
           <div class="carousel-container">
             <div class="carousel-images">
               <div class="thumb-wrap selected">
@@ -1676,13 +1725,24 @@
 </div>
 
 <script>
-  /* ── Thumbnails ──────────────────────────────────────── */
-  document.querySelectorAll('.thumb-wrap').forEach(function(thumb) {
-    thumb.addEventListener('click', function() {
-      document.querySelectorAll('.thumb-wrap').forEach(function(t) { t.classList.remove('selected'); });
-      this.classList.add('selected');
-      document.querySelector('.main-image').src = this.querySelector('img').src;
+  /* ── Image navigation (arrows + thumbnails) ─────────── */
+  var productImages = Array.from(document.querySelectorAll('.thumb-wrap img')).map(function(img) { return img.src; });
+  var currentImageIndex = 0;
+
+  function setProductImage(index) {
+    currentImageIndex = (index + productImages.length) % productImages.length;
+    document.getElementById('main-product-image').src = productImages[currentImageIndex];
+    document.querySelectorAll('.thumb-wrap').forEach(function(t, i) {
+      t.classList.toggle('selected', i === currentImageIndex);
     });
+  }
+
+  function stepProductImage(dir) {
+    setProductImage(currentImageIndex + dir);
+  }
+
+  document.querySelectorAll('.thumb-wrap').forEach(function(thumb, idx) {
+    thumb.addEventListener('click', function() { setProductImage(idx); });
   });
 
   /* ── Color circles ───────────────────────────────────── */
