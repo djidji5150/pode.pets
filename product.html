@@ -78,6 +78,7 @@
       border: 2px solid #0B3A43;
       border-radius: 100px;
       bottom: 0; left: 4px; right: 0; top: 8px;
+      transition: opacity 0.08s ease;
     }
     .cta-btn .btn-face {
       position: relative;
@@ -85,6 +86,7 @@
       border-radius: 100px;
       padding: 10px 16px;
       display: flex;
+      transition: transform 0.08s ease;
       align-items: center;
       justify-content: center;
     }
@@ -97,6 +99,8 @@
     }
     .cta-btn.bg-beige .btn-face { background: #E6DDD8; }
     .cta-btn.bg-green  .btn-face { background: #A0CE7A; }
+    .cta-btn:active .btn-face { transform: translate(4px, 4px); }
+    .cta-btn:active .btn-shadow { opacity: 0; }
 
     /* ─── Content section ────────────────────────────────── */
     .content-section {
