@@ -634,12 +634,17 @@
     }
 
     /* ─── Accordion ───────────────────────────────────────── */
+    .white-card.accordion-card {
+      gap: 0;
+      padding: 48px 80px;
+    }
+
     .accordion-item {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       align-self: stretch;
-      padding: 16px 0 24px;
+      padding: 20px 0 28px;
       border-top: 1px solid rgba(11, 58, 67, 0.32);
       overflow: hidden;
     }
@@ -663,12 +668,14 @@
     }
 
     .accordion-arrow {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 60px;
+      border: 1px solid rgba(11, 58, 67, 0.2);
+      background: rgba(11, 58, 67, 0.04);
       flex-shrink: 0;
       transition: transform 0.25s ease;
     }
@@ -678,6 +685,7 @@
     }
 
     .accordion-body {
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 14px;
       line-height: 115%;
@@ -1210,6 +1218,7 @@
 
       .section-padded { padding: 0 40px; }
       .white-card { padding: 48px; }
+      .white-card.accordion-card { padding: 32px 48px; }
 
       .review-row { width: 100%; }
       .review-inner { gap: 40px; }
@@ -1261,6 +1270,7 @@
       /* Lower sections */
       .section-padded { padding: 0 20px; }
       .white-card { padding: 28px 24px; border-radius: 28px; }
+      .white-card.accordion-card { padding: 16px 20px; }
 
       .review-row { width: 100%; padding: 20px 0; }
       .review-inner { flex-direction: column; gap: 16px; }
@@ -1486,7 +1496,7 @@
 
         <!-- Accordion card -->
         <div class="section-padded">
-          <div class="white-card">
+          <div class="white-card accordion-card">
             <div class="accordion-item">
               <div class="accordion-header" onclick="toggleAccordion(this)">
                 <span class="accordion-title">Product Description</span>
