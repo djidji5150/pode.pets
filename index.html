@@ -252,6 +252,14 @@
       flex-shrink: 0;
     }
 
+    .section-img-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .section-img-wrap .section-img {
+      display: block;
+    }
+
     .section-txt {
       display: flex;
       flex-direction: column;
@@ -718,14 +726,16 @@
             <div class="btn-face"><span>See more</span></div>
           </a>
         </div>
-        <img class="section-img" src="images/travel-safe.png" alt="Travel safe with Pote" />
-        <!-- Floating pills -->
-        <div class="floating-deco" style="position:absolute; right: 80px; bottom: 0; display:flex; gap:8px;">
-          <span class="pill">#cats</span>
-          <span class="pill">#smallsize</span>
+        <div class="section-img-wrap">
+          <img class="section-img" src="images/travel-safe.png" alt="Travel safe with Pote" />
+          <!-- Floating pills – lower left corner of image -->
+          <div class="floating-deco" style="position:absolute; left: 20px; bottom: 20px; display:flex; gap:8px; z-index:2;">
+            <span class="pill">#cats</span>
+            <span class="pill">#smallsize</span>
+          </div>
+          <!-- Scribble illustration – lower right corner of image -->
+          <img class="floating-deco" src="images/illustration-5.svg" alt="" style="position:absolute; right: 20px; bottom: 20px; width:140px; height:140px; object-fit:contain; pointer-events:none; z-index:2;" />
         </div>
-        <!-- Floating illustration -->
-        <img class="floating-deco" src="images/illustration-5.svg" alt="" style="position:absolute; right: 80px; top: 50%; transform:translateY(-50%); width:181px; height:181px; object-fit:contain; pointer-events:none;" />
       </div>
 
       <!-- Full-width image + rotating banner -->
