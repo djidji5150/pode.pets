@@ -294,7 +294,10 @@
       height: 32px;
       background: #FFFFFF;
       border-radius: 27px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
     }
+    .badge:hover { opacity: 0.75; }
 
     .badge-icon {
       width: 16px;
@@ -1324,16 +1327,16 @@
 
             <!-- Rating -->
             <div class="rating-row">
-              <div class="badge">
+              <a class="badge" href="#reviews-section" style="text-decoration:none;" onclick="document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'});return false;">
                 <img src="images/icon-star.svg" alt="" class="badge-icon" />
                 <span class="badge-text">4.8</span>
-              </div>
-              <div class="badge">
+              </a>
+              <a class="badge" href="#reviews-section" style="text-decoration:none;" onclick="document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'});return false;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="badge-icon">
                   <path d="M14 7.5C14 10.5376 11.3137 13 8 13C7.24353 13 6.52021 12.866 5.85714 12.621L2 14L3.18182 11.0385C2.44068 10.1923 2 9.10769 2 7.92308C2 4.88462 4.68629 2.42308 8 2.42308C11.3137 2.42308 14 4.96154 14 8" stroke="#0B3A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="badge-text">67 Reviews</span>
-              </div>
+              </a>
             </div>
           </div>
 
@@ -1344,7 +1347,7 @@
               <div class="selector-label-row">
                 <span class="selector-label">Choose color</span>
                 <div class="selector-divider"></div>
-                <span class="selector-value">Gray</span>
+                <span class="selector-value" id="color-label-value">Gray</span>
               </div>
               <div class="color-circles">
                 <div class="color-circle selected" style="background:#808080;" title="Gray"></div>
@@ -1365,13 +1368,13 @@
               <div class="selector-label-row">
                 <span class="selector-label">Choose a Size</span>
                 <div class="selector-divider"></div>
-                <span class="selector-value" id="size-label-value">Medium – 30.5" × 20.5" × 26"</span>
+                <span class="selector-value" id="size-label-value">Medium</span>
               </div>
               <div class="size-dropdown-wrap">
                 <div class="dropdown" id="size-dropdown" onclick="toggleSizeDropdown()">
                   <div class="dropdown-content">
-                    <span class="dropdown-main" id="dropdown-main-text">Medium – 30.5" × 20.5" × 26" (L × W × H)</span>
-                    <span class="dropdown-sub" id="dropdown-sub-text">Beagle, Mini-Doodles, German Pinscher</span>
+                    <span class="dropdown-main" id="dropdown-main-text">Medium – 780 × 520 × 660 mm (L × W × H)</span>
+                    <span class="dropdown-sub" id="dropdown-sub-text">Average weight 13 kg</span>
                   </div>
                   <div class="dropdown-arrow" id="dropdown-arrow-icon">
                     <svg width="8" height="4" viewBox="0 0 8 4" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1380,33 +1383,29 @@
                   </div>
                 </div>
                 <div class="dropdown-options" id="size-options">
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Small – 24.5" × 18.5" × 23" (L × W × H)' data-sub="French Bulldog, Dachsund, Boston Terrier" data-label='Small – 24.5" × 18.5" × 23"'>
-                    <span class="dropdown-option-main">Small – 24.5" × 18.5" × 23" (L × W × H)</span>
-                    <span class="dropdown-option-sub">French Bulldog, Dachsund, Boston Terrier</span>
+                  <div class="dropdown-option selected" onclick="selectSize(this)" data-main="Medium – 780 × 520 × 660 mm (L × W × H)" data-sub="Average weight 13 kg" data-label="Medium">
+                    <span class="dropdown-option-main">Medium – 780 × 520 × 660 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 13 kg</span>
                   </div>
-                  <div class="dropdown-option selected" onclick="selectSize(this)" data-main='Medium – 30.5" × 20.5" × 26" (L × W × H)' data-sub="Beagle, Mini-Doodles, German Pinscher" data-label='Medium – 30.5" × 20.5" × 26"'>
-                    <span class="dropdown-option-main">Medium – 30.5" × 20.5" × 26" (L × W × H)</span>
-                    <span class="dropdown-option-sub">Beagle, Mini-Doodles, German Pinscher</span>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main="Intermediate – 880 × 580 × 740 mm (L × W × H)" data-sub="Average weight 16 kg" data-label="Intermediate">
+                    <span class="dropdown-option-main">Intermediate – 880 × 580 × 740 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 16 kg</span>
                   </div>
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Intermediate – 34.5" × 23" × 29" (L × W × H)' data-sub="Pit Bull, Belgian Malinois, Husky, Labrador, Golden Retriever" data-label='Intermediate – 34.5" × 23" × 29"'>
-                    <span class="dropdown-option-main">Intermediate – 34.5" × 23" × 29" (L × W × H)</span>
-                    <span class="dropdown-option-sub">Pit Bull, Belgian Malinois, Husky, Labrador, Golden Retriever</span>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main="Large – 1030 × 590 × 740 mm (L × W × H)" data-sub="Average weight 18 kg" data-label="Large">
+                    <span class="dropdown-option-main">Large – 1030 × 590 × 740 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 18 kg</span>
                   </div>
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='Large – 40.5" × 23" × 29" (L × W × H)' data-sub="Boxer, Dutch Shepherd, German Shorthaired Pointer, Weimaraner" data-label='Large – 40.5" × 23" × 29"'>
-                    <span class="dropdown-option-main">Large – 40.5" × 23" × 29" (L × W × H)</span>
-                    <span class="dropdown-option-sub">Boxer, Dutch Shepherd, German Shorthaired Pointer, Weimaraner</span>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main="Extra Large – 1030 × 700 × 870 mm (L × W × H)" data-sub="Average weight 21 kg" data-label="Extra Large">
+                    <span class="dropdown-option-main">Extra Large – 1030 × 700 × 870 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 21 kg</span>
                   </div>
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='XL – 40.5" × 27" × 33" (L × W × H)' data-sub="German Shepherd, Cane Corso, Bernedoodle, Doberman Pinscher" data-label='XL – 40.5" × 27" × 33"'>
-                    <span class="dropdown-option-main">XL – 40.5" × 27" × 33" (L × W × H)</span>
-                    <span class="dropdown-option-sub">German Shepherd, Cane Corso, Bernedoodle, Doberman Pinscher</span>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main="Double Extra Large – 1220 × 700 × 850 mm (L × W × H)" data-sub="Average weight 22 kg" data-label="Double Extra Large">
+                    <span class="dropdown-option-main">Double Extra Large – 1220 × 700 × 850 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 22 kg</span>
                   </div>
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='2XL – 48" × 27" × 33" (L × W × H)' data-sub="English Mastiff, Saint Berdoodle, Newfoundland" data-label='2XL – 48" × 27" × 33"'>
-                    <span class="dropdown-option-main">2XL – 48" × 27" × 33" (L × W × H)</span>
-                    <span class="dropdown-option-sub">English Mastiff, Saint Berdoodle, Newfoundland</span>
-                  </div>
-                  <div class="dropdown-option" onclick="selectSize(this)" data-main='3XL – 54.5" × 35.5" × 42" (L × W × H)' data-sub="Great Dane, Irish Wolfhound" data-label='3XL – 54.5" × 35.5" × 42"'>
-                    <span class="dropdown-option-main">3XL – 54.5" × 35.5" × 42" (L × W × H)</span>
-                    <span class="dropdown-option-sub">Great Dane, Irish Wolfhound</span>
+                  <div class="dropdown-option" onclick="selectSize(this)" data-main="Triple Extra Large – 1390 × 900 × 1070 mm (L × W × H)" data-sub="Average weight 32 kg" data-label="Triple Extra Large">
+                    <span class="dropdown-option-main">Triple Extra Large – 1390 × 900 × 1070 mm (L × W × H)</span>
+                    <span class="dropdown-option-sub">Average weight 32 kg</span>
                   </div>
                 </div>
               </div>
@@ -1481,7 +1480,7 @@
         </div>
 
         <!-- Reviews card -->
-        <div class="section-padded">
+        <div class="section-padded" id="reviews-section">
           <div class="white-card">
             <!-- Reviews header -->
             <div style="display:flex; flex-direction:row; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
@@ -1691,7 +1690,7 @@
     circle.addEventListener('click', function() {
       document.querySelectorAll('.color-circle').forEach(function(c) { c.classList.remove('selected'); });
       this.classList.add('selected');
-      document.getElementById('size-label-value').closest('.selector-label-row').querySelector('.selector-value').textContent = this.getAttribute('title');
+      document.getElementById('color-label-value').textContent = this.getAttribute('title');
     });
   });
 
